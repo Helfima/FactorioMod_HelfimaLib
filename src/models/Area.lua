@@ -11,7 +11,7 @@ local Area = {
 ---@param position MapPosition
 ---@param delta double
 ---@return boolean
-Area.is_in_area = function(area, position, delta)
+function Area.is_in_area(area, position, delta)
     local delta = delta or 0
     local rx = position.x
     local ry = position.y
@@ -29,7 +29,7 @@ end
 ---@param position MapPosition
 ---@param delta? double
 ---@return uint
-Area.get_cardinal_border = function(area, position, delta)
+function Area.get_cardinal_border(area, position, delta)
     local delta = delta or 1
     local rx = position.x
     local ry = position.y
@@ -47,7 +47,7 @@ end
 
 ---@param area BoundingBox
 ---@param position MapPosition
-Area.extend_area = function(area, position)
+function Area.extend_area(area, position)
     local rx = position.x
     local ry = position.y
     if rx < area.left_top.x then area.left_top.x = rx end
@@ -58,14 +58,14 @@ end
 
 ---@param left_top BoundingBox
 ---@param right_bottom MapPosition
-Area.get_area = function(left_top, right_bottom)
+function Area.get_area(left_top, right_bottom)
     local area = { left_top = left_top, right_bottom = right_bottom }
     return area
 end
 
 ---@param area BoundingBox
 ---@return MapPosition
-Area.get_center = function(area)
+function Area.get_center(area)
     local x = (area.left_top.x + area.right_bottom.x) / 2
     local y = (area.left_top.y + area.right_bottom.y) / 2
     return { x = x, y = y }

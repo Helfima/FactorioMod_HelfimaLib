@@ -9,13 +9,13 @@ local EntityPrototype = {
 ---get entity key
 ---@param entity LuaEntityPrototype
 ---@return string
-EntityPrototype.get_key = function (entity)
+function EntityPrototype.get_key(entity)
     return string.format("%s=%s", entity.type, entity.name)
 end
 
 ---@param entity LuaEntityPrototype
 ---@return Product|nil
-EntityPrototype.get_product = function(entity)
+function EntityPrototype.get_product(entity)
     local products = entity.mineable_properties.products
     if products ~= nil then
         return products[1]
@@ -24,7 +24,7 @@ EntityPrototype.get_product = function(entity)
 end
 
 ---@param entity LuaEntityPrototype
-EntityPrototype.get_icon = function(entity)
+function EntityPrototype.get_icon(entity)
     local name = entity.name
     local type = "item"
     local product = EntityPrototype.get_product(entity)
@@ -37,7 +37,7 @@ EntityPrototype.get_icon = function(entity)
 end
 
 ---@param entity LuaEntityPrototype
-EntityPrototype.get_icon_string = function(entity)
+function EntityPrototype.get_icon_string(entity)
     local icon = EntityPrototype.get_icon(entity)
     return string.format("[%s=%s]", icon.type, icon.name)
 end

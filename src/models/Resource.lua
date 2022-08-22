@@ -8,14 +8,14 @@ local Resource = {
 ---get resource key
 ---@param resource ResourceData|LuaEntity
 ---@return string
-Resource.get_key = function (resource)
+function Resource.get_key(resource)
     return string.format("%s,%s", resource.position.x, resource.position.y)
 end
 
 ---create resource
 ---@param resource LuaEntity
 ---@return ResourceData
-Resource.create = function(resource)
+function Resource.create(resource)
     ---@type ResourceData
     local new_resource = {
         name=resource.name,
@@ -28,7 +28,7 @@ end
 
 ---@param resource LuaEntity
 ---@return string
-Resource.get_product_type = function(resource)
+function Resource.get_product_type(resource)
     local type = "item"
     local product = Resource.get_product(resource)
     if product ~= nil then
@@ -38,7 +38,7 @@ Resource.get_product_type = function(resource)
 end
 ---@param resource LuaEntity
 ---@return Product|nil
-Resource.get_product = function(resource)
+function Resource.get_product(resource)
     local products = resource.prototype.mineable_properties.products
     if products ~= nil then
         return products[1]
@@ -47,7 +47,7 @@ Resource.get_product = function(resource)
 end
 
 ---@param resource LuaEntity
-Resource.get_icon = function(resource)
+function Resource.get_icon(resource)
     local name = resource.name
     local type = "item"
     local product = Resource.get_product(resource)
@@ -59,7 +59,7 @@ Resource.get_icon = function(resource)
     return icon
 end
 
-Resource.get_icon_string = function(resource)
+function Resource.get_icon_string(resource)
     local icon = Resource.get_icon(resource)
     return string.format("[%s=%s]", icon.type, icon.name)
 end

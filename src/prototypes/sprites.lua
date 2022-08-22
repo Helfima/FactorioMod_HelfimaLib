@@ -10,7 +10,7 @@ local function sprite_mipmap(name, size, count)
     }
 end
 
-local mipmaps = require("prototypes.sprites_builded")
+local mipmaps = require("__HelfimaLib__.prototypes.sprites_builded")
 
 local spite_icons = {}
 

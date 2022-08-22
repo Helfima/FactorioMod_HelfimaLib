@@ -7,6 +7,7 @@
 ---@field auto_clear boolean
 ---@field panel_close boolean
 ---@field add_special_button boolean
+---@field views {[string] : Form}
 Form = newclass(Object, function(base, classname)
   Object.init(base, classname)
   base:bind()
@@ -19,11 +20,11 @@ Form = newclass(Object, function(base, classname)
   base.add_special_button = true
 end)
 
----@field {[string] : Form}
 Form.views = {}
 
 -------------------------------------------------------------------------------
 ---Bind Dispatcher
+---<br>Don't use this function! use Form:on_bind()
 function Form:bind()
   Dispatcher:bind(defines.mod.events.on_gui_event, self, self.event)
 
@@ -39,12 +40,13 @@ function Form:bind()
 end
 
 -------------------------------------------------------------------------------
----On Bind Dispatcher
+---For Bind Dispatcher Event
 function Form:on_bind()
 end
 
 -------------------------------------------------------------------------------
 ---Style
+---<br>Don't use this function! use Form:on_style()
 function Form:style()
   local width_main, height_main = User.get_main_sizes()
   self.styles = {
@@ -244,6 +246,7 @@ end
 
 -------------------------------------------------------------------------------
 ---Event
+---<br>Don't use this function! use Form:on_event(event)
 ---@param event EventModData
 function Form:event(event)
   if not (self:is_opened()) then return end
@@ -253,6 +256,7 @@ end
 
 -------------------------------------------------------------------------------
 ---On form event
+---<br>Don't use this function! use Form:on_event(event)
 ---@param event EventModData
 function Form:on_event_form(event)
   local flow_panel, content_panel, menu_panel = self:get_panel()
@@ -272,6 +276,7 @@ end
 
 -------------------------------------------------------------------------------
 ---Close
+---<br>Don't use this function! use Form:on_close(event)
 ---@param event EventModData
 function Form:close(event)
   if not (self:is_opened()) then return end
@@ -295,6 +300,7 @@ end
 
 -------------------------------------------------------------------------------
 ---Build first container
+---<br>Don't use this function! use Form:on_open(event) or Form:on_open_before(event)
 ---@param event EventModData
 function Form:open(event)
   self:style()
@@ -327,6 +333,7 @@ end
 
 -------------------------------------------------------------------------------
 ---Update
+---<br>Don't use this function! use Form:on_update(event)
 ---@param event EventModData
 function Form:update(event)
   if not (self:is_opened()) then return end
