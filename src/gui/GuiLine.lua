@@ -3,7 +3,7 @@
 ---@class GuiLine : GuiElement
 GuiLine = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiLine"
+  base.classname = "HLGuiLine"
   base.options.type = "line"
   base.options.style = "line"
 end)
@@ -12,12 +12,12 @@ end)
 ---@class GuiLineH
 GuiLineH = newclass(GuiLine,function(base,...)
   GuiLine.init(base,...)
-  base.options.direction = "horizontal"
+  base.options.direction = defines.mod.direction.horizontal
 end)
 
 -------------------------------------------------------------------------------
 ---@class GuiLineV
 GuiLineV = newclass(GuiLine,function(base,...)
   GuiLine.init(base,...)
-  base.options.direction = "vertical"
+  base.options.direction = defines.mod.direction.vertical
 end)

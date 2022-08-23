@@ -3,9 +3,9 @@
 ---@class GuiTextField : GuiElement
 GuiTextField = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiTextField"
+  base.classname = "HLGuiTextField"
   base.options.type = "textfield"
-  base.options.style = "helmod_textfield"
+  base.options.style = "helfima_lib_textfield"
 end)
 
 -------------------------------------------------------------------------------

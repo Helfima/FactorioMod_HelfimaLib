@@ -3,7 +3,7 @@
 ---@class GuiTabPane : GuiElement
 GuiTabPane = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiTabPane"
+  base.classname = "HLGuiTabPane"
   base.options.type = "tabbed-pane"
 end)
 
@@ -11,7 +11,7 @@ end)
 ---@class GuiTab
 GuiTab = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiTab"
+  base.classname = "HLGuiTab"
   base.options.type = "tab"
 end)
 

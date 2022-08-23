@@ -5,9 +5,9 @@
 ---@field options {}
 GuiButton = newclass(GuiElement, function(base, ...)
   GuiElement.init(base, ...)
-  base.classname = "HMGuiButton"
+  base.classname = "HLGuiButton"
   base.options.type = "button"
-  base.options.style = "helmod_button_default"
+  base.options.style = defines.mod.styles.button.default
 end)
 
 -------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ end
 ---@return table
 function GuiButton:onErrorOptions()
   local options = self:getOptions()
-  options.style = "helmod_button_default"
+  options.style = defines.mod.styles.button.default
   options.type = "button"
   if (type(options.caption) == "boolean") then
     Logging:error(self.classname, "addGuiButton - caption is a boolean")
@@ -98,7 +98,7 @@ end
 ---@class GuiButtonSprite : GuiButton
 GuiButtonSprite = newclass(GuiButton, function(base, ...)
   GuiButton.init(base, ...)
-  base.options.style = "helmod_button_icon"
+  base.options.style = defines.mod.styles.button.icon
   base.is_caption = false
 end)
 
@@ -106,7 +106,7 @@ end)
 ---@class GuiButtonSelectSprite : GuiButton
 GuiButtonSelectSprite = newclass(GuiButton, function(base, ...)
   GuiButton.init(base, ...)
-  base.options.style = "helmod_button_select_icon"
+  base.options.style = defines.mod.styles.button.select_icon
   base.is_caption = false
 end)
 
@@ -115,11 +115,11 @@ end)
 ---@param color string
 ---@return GuiButtonSelectSprite
 function GuiButtonSelectSprite:color(color)
-  local style = "helmod_button_select_icon"
-  if color == "red" then style = "helmod_button_select_icon_red" end
-  if color == "yellow" then style = "helmod_button_select_icon_yellow" end
-  if color == "green" then style = "helmod_button_select_icon_green" end
-  if color == "flat" then style = "helmod_button_select_icon_flat" end
+  local style = defines.mod.styles.button.select_icon
+  if color == "red" then style = defines.mod.styles.button.select_icon_red end
+  if color == "yellow" then style = defines.mod.styles.button.select_icon_yellow end
+  if color == "green" then style = defines.mod.styles.button.select_icon_green end
+  if color == "flat" then style = defines.mod.styles.button.select_icon_flat end
   self.options.style = style
   return self
 end
@@ -128,7 +128,7 @@ end
 ---@class GuiButtonSpriteM : GuiButton
 GuiButtonSpriteM = newclass(GuiButton, function(base, ...)
   GuiButton.init(base, ...)
-  base.options.style = "helmod_button_icon_m"
+  base.options.style = defines.mod.styles.button.icon_m
   base.is_caption = false
 end)
 
@@ -136,7 +136,7 @@ end)
 ---@class GuiButtonSelectSpriteM : GuiButton
 GuiButtonSelectSpriteM = newclass(GuiButton, function(base, ...)
   GuiButton.init(base, ...)
-  base.options.style = "helmod_button_select_icon_m"
+  base.options.style = defines.mod.styles.button.select_icon_m
   base.is_caption = false
 end)
 
@@ -145,11 +145,11 @@ end)
 ---@param color string
 ---@return GuiButtonSelectSpriteM
 function GuiButtonSelectSpriteM:color(color)
-  local style = "helmod_button_select_icon_m"
-  if color == "red" then style = "helmod_button_select_icon_m_red" end
-  if color == "yellow" then style = "helmod_button_select_icon_m_yellow" end
-  if color == "green" then style = "helmod_button_select_icon_m_green" end
-  if color == "flat" then style = "helmod_button_select_icon_m_flat" end
+  local style = defines.mod.styles.button.select_icon_m
+  if color == "red" then style = defines.mod.styles.button.select_icon_m_red end
+  if color == "yellow" then style = defines.mod.styles.button.select_icon_m_yellow end
+  if color == "green" then style = defines.mod.styles.button.select_icon_m_green end
+  if color == "flat" then style = defines.mod.styles.button.select_icon_m_flat end
   self.options.style = style
   return self
 end
@@ -158,7 +158,7 @@ end
 ---@class GuiButtonSpriteSm : GuiButton
 GuiButtonSpriteSm = newclass(GuiButton, function(base, ...)
   GuiButton.init(base, ...)
-  base.options.style = "helmod_button_icon_sm"
+  base.options.style = defines.mod.styles.button.icon_sm
   base.is_caption = false
 end)
 
@@ -166,7 +166,7 @@ end)
 ---@class GuiButtonSelectSpriteSm : GuiButton
 GuiButtonSelectSpriteSm = newclass(GuiButton, function(base, ...)
   GuiButton.init(base, ...)
-  base.options.style = "helmod_button_select_icon_sm"
+  base.options.style = defines.mod.styles.button.select_icon_sm
   base.is_caption = false
 end)
 
@@ -175,11 +175,11 @@ end)
 ---@param color string
 ---@return GuiButtonSelectSpriteSm
 function GuiButtonSelectSpriteSm:color(color)
-  local style = "helmod_button_select_icon_sm"
-  if color == "red" then style = "helmod_button_select_icon_sm_red" end
-  if color == "yellow" then style = "helmod_button_select_icon_sm_yellow" end
-  if color == "green" then style = "helmod_button_select_icon_sm_green" end
-  if color == "flat" then style = "helmod_button_select_icon_sm_flat" end
+  local style = defines.mod.styles.button.select_icon_sm
+  if color == "red" then style = defines.mod.styles.button.select_icon_sm_red end
+  if color == "yellow" then style = defines.mod.styles.button.select_icon_sm_yellow end
+  if color == "green" then style = defines.mod.styles.button.select_icon_sm_green end
+  if color == "flat" then style = defines.mod.styles.button.select_icon_sm_flat end
   self.options.style = style
   return self
 end
@@ -188,7 +188,7 @@ end
 ---@class GuiButtonSpriteXxl : GuiButton
 GuiButtonSpriteXxl = newclass(GuiButton, function(base, ...)
   GuiButton.init(base, ...)
-  base.options.style = "helmod_button_icon_xxl"
+  base.options.style = defines.mod.styles.button.icon_xxl
   base.is_caption = false
 end)
 
@@ -196,7 +196,7 @@ end)
 ---@class GuiButtonSelectSpriteXxl : GuiButton
 GuiButtonSelectSpriteXxl = newclass(GuiButton, function(base, ...)
   GuiButton.init(base, ...)
-  base.options.style = "helmod_button_select_icon_xxl"
+  base.options.style = defines.mod.styles.button.select_icon_xxl
   base.is_caption = false
 end)
 
@@ -205,10 +205,11 @@ end)
 ---@param color string
 ---@return GuiButtonSelectSpriteXxl
 function GuiButtonSelectSpriteXxl:color(color)
-  local style = "helmod_button_select_icon_xxl"
-  if color == "red" then style = "helmod_button_select_icon_xxl_red" end
-  if color == "yellow" then style = "helmod_button_select_icon_xxl_yellow" end
-  if color == "green" then style = "helmod_button_select_icon_xxl_green" end
+  local style = defines.mod.styles.button.select_icon_xxl
+  if color == "red" then style = defines.mod.styles.button.select_icon_xxl_red end
+  if color == "yellow" then style = defines.mod.styles.button.select_icon_xxl_yellow end
+  if color == "green" then style = defines.mod.styles.button.select_icon_xxl_green end
+  if color == "flat" then style = defines.mod.styles.button.select_icon_xxl_flat end
   self.options.style = style
   return self
 end

@@ -3,9 +3,9 @@
 ---@class GuiTextBox : GuiElement
 GuiTextBox = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiTextBox"
+  base.classname = "HLGuiTextBox"
   base.options.type = "text-box"
-  base.options.style = "helmod_textbox_default"
+  base.options.style = "textbox"
 end)
 
 -------------------------------------------------------------------------------

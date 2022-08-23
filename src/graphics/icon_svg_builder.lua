@@ -1382,7 +1382,7 @@ local function inkscape_command(inkscape, filename)
     os.execute(cmd)
 end
 -------------------------------------------------------------------------------
-local force_build = false
+local force_build = true
 local inkscape = "E:\\Autre\\inkscape\\bin\\inkscape"
 local info = debug.getinfo(1)
 local current_file=string.gsub(info.source, "/", "\\")

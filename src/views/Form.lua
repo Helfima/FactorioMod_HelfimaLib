@@ -7,17 +7,19 @@
 ---@field auto_clear boolean
 ---@field panel_close boolean
 ---@field add_special_button boolean
+---@field mod_menu boolean
 ---@field views {[string] : Form}
 Form = newclass(Object, function(base, classname)
   Object.init(base, classname)
   base:bind()
   base:style()
-  base.inner_frame = defines.mod.styles.inner
+  base.inner_frame = defines.mod.styles.frame.inner
   base.locate = defines.mod.views.locate.screen
   base.content_verticaly = true
   base.auto_clear = true
   base.panel_close = true
   base.add_special_button = true
+  base.mod_menu = false
 end)
 
 Form.views = {}
@@ -34,8 +36,10 @@ function Form:bind()
   Dispatcher:bind(defines.mod.events.on_gui_update, self, self.update)
   Dispatcher:bind(defines.mod.events.on_gui_close, self, self.close)
 
-  Dispatcher:bind("on_gui_error", self, self.update_error)
-  Dispatcher:bind("on_gui_message", self, self.update_message)
+  Dispatcher:bind(defines.mod.events.on_gui_error, self, self.update_error)
+  Dispatcher:bind(defines.mod.events.on_gui_message, self, self.update_message)
+
+  Dispatcher:bind(defines.mod.events.on_gui_mod_menu, self, self.update_mod_menu)
   self:on_bind()
 end
 
@@ -87,6 +91,13 @@ end
 ---@return string|nil,string|nil
 function Form:get_button_sprites()
   return nil,nil
+end
+
+-------------------------------------------------------------------------------
+---Return button caption
+---@return string|table
+function Form:get_button_caption()
+  return self.panel_caption
 end
 
 -------------------------------------------------------------------------------
@@ -143,7 +154,7 @@ function Form:get_panel()
         parent_panel[panel_name][header_name][menu_name]
   end
   ---main panel
-  local flow_panel = GuiElement.add(parent_panel, GuiFrameV(panel_name):style(defines.mod.styles.frame_inner_outer))
+  local flow_panel = GuiElement.add(parent_panel, GuiFrameV(panel_name):style(defines.mod.styles.frame.inner_outer))
   flow_panel.style.horizontally_stretchable = true
   flow_panel.style.vertically_stretchable = true
   flow_panel.location = User.get_form_location(panel_name)
@@ -153,7 +164,7 @@ function Form:get_panel()
   header_panel.style.horizontally_stretchable = true
   ---header panel
   local title_panel = GuiElement.add(header_panel,
-    GuiFrameH("title_panel"):caption(self.panel_caption or self.classname):style(defines.mod.styles.frame_invisible))
+    GuiFrameH("title_panel"):caption(self.panel_caption or self.classname):style(defines.mod.styles.frame.invisible))
   title_panel.style.horizontally_stretchable = true
   title_panel.style.height = 28
   title_panel.drag_target = flow_panel
@@ -230,7 +241,7 @@ end
 ---@param direction? string --horizontal, vertical
 ---@return LuaGuiElement
 function Form:get_frame_deep_panel(panel_name, direction)
-  return self:get_frame_panel(panel_name, defines.mod.styles.inside_deep_frame, direction)
+  return self:get_frame_panel(panel_name, defines.mod.styles.frame.inside_deep, direction)
 end
 
 -------------------------------------------------------------------------------
@@ -364,20 +375,20 @@ function Form:update_menu_header(event)
       for _, form in pairs(Form.views) do
         if self.add_special_button == true and form:is_visible() and form:is_special() then
           local icon_hovered, icon = form:get_button_sprites()
-          GuiElement.add(special_group, GuiButton(form.classname, "OPEN"):sprite("menu", icon_hovered, icon):style(defines.mod.styles.frame_action_button):tooltip(form.panel_caption))
+          GuiElement.add(special_group, GuiButton(form.classname, "OPEN"):sprite("menu", icon_hovered, icon):style(defines.mod.styles.frame.action_button):tooltip(form.panel_caption))
         end
       end
       ---Standard group
       local standard_group = GuiElement.add(menu_panel, GuiFlowH("standard_group"))
       GuiElement.add(standard_group,
         GuiButton(self.classname, "minimize-window"):sprite("menu", defines.sprites.minimize.white,
-          defines.sprites.minimize.black):style(defines.mod.styles.frame_action_button):tooltip({ "helfima-lib-button.minimize" }))
+          defines.sprites.minimize.black):style(defines.mod.styles.frame.action_button):tooltip({ "helfima-lib.minimize" }))
       GuiElement.add(standard_group,
         GuiButton(self.classname, "maximize-window"):sprite("menu", defines.sprites.maximize.white,
-          defines.sprites.maximize.black):style(defines.mod.styles.frame_action_button):tooltip({ "helfima-lib-button.maximize" }))
+          defines.sprites.maximize.black):style(defines.mod.styles.frame.action_button):tooltip({ "helfima-lib.maximize" }))
       GuiElement.add(standard_group,
         GuiButton(self.classname, "CLOSE"):sprite("menu", defines.sprites.close.white, defines.sprites.close.black):
-        style(defines.mod.styles.frame_action_button):tooltip({ "helfima-lib-button.close" }))
+        style(defines.mod.styles.frame.action_button):tooltip({ "helfima-lib.close" }))
     end
   else
     Logging:warn(self.classname, "self.panel_caption not found")
@@ -431,4 +442,27 @@ function Form:update_error(event)
   local panel = self:get_frame_deep_panel("error")
   panel.clear()
   GuiElement.add(panel, GuiLabel("message"):caption(event.message or "Unknown error"):color("red"))
+end
+
+local ModGui = require "mod-gui"
+---Build mod menu at top
+function Form:update_mod_menu()
+    if self.mod_menu ~= true then return end
+    local sprite1, sprite2 = self:get_button_sprites()
+    if sprite1 == nil then return end
+    local gui_name = string.format("%s=OPEN", self.classname)
+    local lua_player = Player.native()
+    local lua_gui_element = ModGui.get_button_flow(lua_player)
+    if lua_gui_element ~= nil and lua_gui_element[gui_name] ~= nil then
+        lua_gui_element[gui_name].destroy()
+    end
+    if lua_gui_element ~= nil and lua_gui_element[gui_name] == nil then
+        local gui_button = GuiElement.add(lua_gui_element,
+            GuiButton(gui_name)
+            :sprite("menu", sprite1, sprite2)
+            :style(defines.mod.styles.mod_gui_button)
+            :tooltip(self.panel_caption))
+        gui_button.style.width = 37
+        gui_button.style.height = 37
+    end
 end

@@ -3,9 +3,9 @@
 ---@class GuiTable : GuiElement
 GuiTable = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiTable"
+  base.classname = "HLGuiTable"
   base.options.type = "table"
-  base.options.style = "helmod_table_default"
+  base.options.style = "helfima_lib_table_default"
 end)
 
 -------------------------------------------------------------------------------

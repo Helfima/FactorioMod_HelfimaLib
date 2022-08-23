@@ -3,7 +3,7 @@
 ---@class GuiProgressBar : GuiElement
 GuiProgressBar = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiProgressBar"
+  base.classname = "HLGuiProgressBar"
   base.options.type = "progressbar"
   base.options.style = "production_progressbar"
 end)

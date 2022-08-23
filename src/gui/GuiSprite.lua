@@ -3,7 +3,7 @@
 ---@class GuiSprite : GuiElement
 GuiSprite = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiSprite"
+  base.classname = "HLGuiSprite"
   base.options.type = "sprite"
 end)
 

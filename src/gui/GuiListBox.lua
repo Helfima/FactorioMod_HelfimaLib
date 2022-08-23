@@ -3,7 +3,7 @@
 ---@class GuiListBox : GuiElement
 GuiListBox = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiListBox"
+  base.classname = "HLGuiListBox"
   base.options.type = "list-box"
 end)
 

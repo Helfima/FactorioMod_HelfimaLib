@@ -3,7 +3,7 @@
 ---@class GuiSwitch : GuiElement
 GuiSwitch = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "GuiSwitch"
+  base.classname = "HLGuiSwitch"
   base.options.type = "switch"
 end)
 

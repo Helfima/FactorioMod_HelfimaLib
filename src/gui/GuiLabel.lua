@@ -3,7 +3,7 @@
 ---@class GuiLabel : GuiElement
 GuiLabel = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiLabel"
+  base.classname = "HLGuiLabel"
   base.options.type = "label"
 end)
 
@@ -21,7 +21,7 @@ end
 ---@param color string
 ---@return GuiLabel
 function GuiLabel:color(color)
-  local color = defines.tag.color[color] or defines.tag.color.orange
-  self.m_caption = {"", color, self.m_caption, defines.tag.color.close}
+  local color = defines.mod.tags.color[color] or defines.mod.tags.color.orange
+  self.m_caption = {"", color, self.m_caption, defines.mod.tags.color.close}
   return self
 end

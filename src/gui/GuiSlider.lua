@@ -3,7 +3,7 @@
 ---@class GuiSlider : GuiElement
 GuiSlider = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiSlider"
+  base.classname = "HLGuiSlider"
   base.options.type = "slider"
 end)
 

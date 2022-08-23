@@ -3,9 +3,9 @@
 ---@class GuiScroll : GuiElement
 GuiScroll = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiScroll"
+  base.classname = "HLGuiScroll"
   base.options.type = "scroll-pane"
-  base.options.style = "scroll_pane"
+  base.options.style = "inner_frame_scroll_pane"
 end)
 
 -------------------------------------------------------------------------------

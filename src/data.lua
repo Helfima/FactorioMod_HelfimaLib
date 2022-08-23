@@ -1,4 +1,2 @@
--- require("prototypes.virtual-signal")
--- require("prototypes.shortcut")
--- require("prototypes.hotkey")
--- require("prototypes.tips-and-tricks")
+require("__HelfimaLib__.prototypes.sprites")
+require("__HelfimaLib__.prototypes.styles")

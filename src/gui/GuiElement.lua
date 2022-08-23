@@ -44,7 +44,7 @@ end
 ---@param tooltip table
 ---@return GuiElement
 function GuiElement:tooltip(tooltip)
-  if tooltip ~= nil and tooltip.classname == "HMGuiTooltip" then
+  if tooltip ~= nil and tooltip.classname == "HLGuiTooltip" then
     self.options.tooltip = tooltip:create()
   else
     self.options.tooltip = tooltip
@@ -68,7 +68,7 @@ end
 function GuiElement:overlay(type, name)
   if type == nil then return self end
   if name == nil then
-    self.m_overlay = string.format("helmod-%s", type)
+    self.m_overlay = string.format("helfima-lib-%s", type)
   elseif type ~= nil and name ~= nil then
     if type == "resource" then type = "item" end
     if Player.is_valid_sprite_path(string.format("%s/%s", type, name)) then
@@ -104,7 +104,7 @@ end
 function GuiElement.getSprite(type, name)
   local sprite = ""
   if name == nil then
-    sprite = string.format("helmod-%s", type)
+    sprite = string.format("helfima-lib-%s", type)
   elseif type ~= nil and name ~= nil then
     if type == "resource" then type = "entity" end
     if type == "rocket" then type = "item" end
@@ -161,7 +161,7 @@ end
 function GuiElement.add(parent, gui_element)
   local element = nil
   local ok , err = pcall(function()
-    if gui_element.classname ~= "HMGuiCell" then
+    if gui_element.classname ~= "HLGuiCell" then
       element = parent.add(gui_element:getOptions())
     else
       element = gui_element:create(parent)

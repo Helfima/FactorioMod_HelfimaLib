@@ -3,14 +3,15 @@
 ---@class AdminPanel : Form
 AdminPanel = newclass(Form, function(base, classname)
   Form.init(base, classname)
-  base.inner_frame = defines.mod.styles.inner_tab
+  base.inner_frame = defines.mod.styles.frame.inner_tab
   base.auto_clear = false
+  base.mod_menu = false
 end)
 
 -------------------------------------------------------------------------------
 ---On initialization
 function AdminPanel:on_init()
-  self.panel_caption = ({ "helmod_result-panel.tab-button-admin" })
+  self.panel_caption = { "helfima-lib.admin" }
 end
 
 -------------------------------------------------------------------------------
@@ -23,13 +24,6 @@ function AdminPanel:on_style(styles, width_main, height_main)
     width = 500,
     height = 400,
   }
-end
-
--------------------------------------------------------------------------------
----Return button caption
----@return table
-function AdminPanel:get_button_caption()
-  return { "helmod_result-panel.tab-button-admin" }
 end
 
 -------------------------------------------------------------------------------
@@ -70,7 +64,7 @@ end
 -------------------------------------------------------------------------------
 ---Get or create tab panel
 ---@param panel_name string
----@param caption string
+---@param caption string|table
 ---@return LuaGuiElement
 function AdminPanel:get_tab(panel_name, caption)
   local content_panel = self:get_tab_pane()
@@ -79,7 +73,7 @@ function AdminPanel:get_tab(panel_name, caption)
     return content_panel[scroll_name]
   end
   local tab_panel = GuiElement.add(content_panel, GuiTab(panel_name):caption(caption))
-  local scroll_panel = GuiElement.add(content_panel, GuiScroll(scroll_name):style("helmod_scroll_pane"):policy(true))
+  local scroll_panel = GuiElement.add(content_panel, GuiScroll(scroll_name):style("scroll_pane"):policy(true))
   content_panel.add_tab(tab_panel, scroll_panel)
   scroll_panel.style.horizontally_stretchable = true
   scroll_panel.style.vertically_stretchable = true
@@ -90,21 +84,21 @@ end
 ---Get or create cache tab panel
 ---@return LuaGuiElement
 function AdminPanel:get_tab_cache()
-  return self:get_tab("cache-tab-panel", { "helmod_result-panel.cache-list" })
+  return self:get_tab("cache-tab-panel", { "helfima-lib.cache-list" })
 end
 
 -------------------------------------------------------------------------------
 ---Get or create mods tab panel
 ---@return LuaGuiElement
 function AdminPanel:get_tab_mod()
-  return self:get_tab("mod-tab-panel", { "helmod_common.mod-list" })
+  return self:get_tab("mod-tab-panel", { "helfima-lib.mod-list" })
 end
 
 -------------------------------------------------------------------------------
 ---Get or create gui tab panel
 ---@return LuaGuiElement
 function AdminPanel:get_tab_gui()
-  return self:get_tab("gui-tab-panel", { "helmod_common.gui-list" })
+  return self:get_tab("gui-tab-panel", { "helfima-lib.gui-list" })
 end
 
 -------------------------------------------------------------------------------
@@ -141,19 +135,19 @@ function AdminPanel:update_gui()
   local scroll_panel = self:get_tab_gui()
   scroll_panel.clear()
 
-  local table_panel = GuiElement.add(scroll_panel, GuiTable("list-table"):column(3):style("helmod_table_border"))
+  local table_panel = GuiElement.add(scroll_panel, GuiTable("list-table"):column(3):style("helfima_lib_table_border"))
   table_panel.vertical_centering = false
   table_panel.style.horizontal_spacing = 5
 
   self:add_cell_header(table_panel, "location",
-    { "", defines.mod.tags.font.default_bold, { "helmod_common.location" }, defines.mod.tags.font.close })
+    { "", defines.mod.tags.font.default_bold, { "helfima-lib.location" }, defines.mod.tags.font.close })
   self:add_cell_header(table_panel, "_name",
-    { "", defines.mod.tags.font.default_bold, { "helmod_result-panel.col-header-name" }, defines.mod.tags.font.close })
+    { "", defines.mod.tags.font.default_bold, { "helfima-lib.name" }, defines.mod.tags.font.close })
   self:add_cell_header(table_panel, "mod",
-    { "", defines.mod.tags.font.default_bold, { "helmod_common.mod" }, defines.mod.tags.font.close })
+    { "", defines.mod.tags.font.default_bold, { "helfima-lib.mod" }, defines.mod.tags.font.close })
 
   local index = 0
-  for _, location in pairs({ "top", "left", "center", "screen", "goal" }) do
+  for _, location in pairs(defines.mod.views.locate) do
     for _, element in pairs(Player.get_gui(location).children) do
       if element.name == "mod_gui_button_flow" or element.name == "mod_gui_frame_flow" then
         for _, element in pairs(element.children) do
@@ -179,14 +173,14 @@ function AdminPanel:update_mod()
   local scroll_panel = self:get_tab_mod()
   scroll_panel.clear()
 
-  local table_panel = GuiElement.add(scroll_panel, GuiTable("list-table"):column(2):style("helmod_table_border"))
+  local table_panel = GuiElement.add(scroll_panel, GuiTable("list-table"):column(2):style("helfima_lib_table_border"))
   table_panel.vertical_centering = false
   table_panel.style.horizontal_spacing = 50
 
   self:add_cell_header(table_panel, "_name",
-    { "", defines.mod.tags.font.default_bold, { "helmod_result-panel.col-header-name" }, defines.mod.tags.font.close })
+    { "", defines.mod.tags.font.default_bold, { "helfima-lib.name" }, defines.mod.tags.font.close })
   self:add_cell_header(table_panel, "version",
-    { "", defines.mod.tags.font.default_bold, { "helmod_common.version" }, defines.mod.tags.font.close })
+    { "", defines.mod.tags.font.default_bold, { "helfima-lib.version" }, defines.mod.tags.font.close })
 
   for name, version in pairs(game.active_mods) do
     GuiElement.add(table_panel, GuiLabel("_name", name):caption(name))
@@ -208,7 +202,7 @@ function AdminPanel:update_cache()
   if table.size(Cache.get()) > 0 then
     local translate_panel = GuiElement.add(table_panel, GuiFlowV("global-caches"))
     GuiElement.add(translate_panel,
-      GuiLabel("translate-label"):caption("Global caches"):style("helmod_label_title_frame"))
+      GuiLabel("translate-label"):caption("Global caches"):style("bold_label"))
     local result_table = GuiElement.add(translate_panel, GuiTable("list-data"):column(3))
     self:add_cache_list_header(result_table)
 
@@ -223,7 +217,7 @@ function AdminPanel:update_cache()
   local users_data = global["users"]
   if table.size(users_data) > 0 then
     local cache_panel = GuiElement.add(table_panel, GuiFlowV("user-caches"))
-    GuiElement.add(cache_panel, GuiLabel("translate-label"):caption("User caches"):style("helmod_label_title_frame"))
+    GuiElement.add(cache_panel, GuiLabel("translate-label"):caption("User caches"):style("bold_label"))
     local result_table = GuiElement.add(cache_panel, GuiTable("list-data"):column(3))
     self:add_cache_list_header(result_table)
 
@@ -251,10 +245,10 @@ end
 ---@param itable LuaGuiElement
 function AdminPanel:add_translate_list_header(itable)
   ---col action
-  self:add_cell_header(itable, "action", { "helmod_result-panel.col-header-action" })
+  self:add_cell_header(itable, "action", { "helfima-lib.action" })
   ---data
-  self:add_cell_header(itable, "header-owner", { "helmod_result-panel.col-header-owner" })
-  self:add_cell_header(itable, "header-total", { "helmod_result-panel.col-header-total" })
+  self:add_cell_header(itable, "header-owner", { "helfima-lib.owner" })
+  self:add_cell_header(itable, "header-total", { "helfima-lib.total" })
 end
 
 -------------------------------------------------------------------------------
@@ -262,10 +256,10 @@ end
 ---@param itable LuaGuiElement
 function AdminPanel:add_cache_list_header(itable)
   ---col action
-  self:add_cell_header(itable, "action", { "helmod_result-panel.col-header-action" })
+  self:add_cell_header(itable, "action", { "helfima-lib.action" })
   ---data
-  self:add_cell_header(itable, "header-owner", { "helmod_result-panel.col-header-owner" })
-  self:add_cell_header(itable, "header-total", { "helmod_result-panel.col-header-total" })
+  self:add_cell_header(itable, "header-owner", { "helfima-lib.owner" })
+  self:add_cell_header(itable, "header-total", { "helfima-lib.total" })
 end
 
 -------------------------------------------------------------------------------
@@ -309,7 +303,7 @@ function AdminPanel:add_cache_list_row(gui_table, class_name, key1, key2, key3, 
     if class_name ~= "users" then
       GuiElement.add(cell_action,
         GuiButton(self.classname, "delete-cache", class_name, key1):sprite("menu", defines.sprites.close.black,
-          defines.sprites.close.black):style("helmod_button_menu_sm_red"):tooltip({ "helmod_button.remove" }))
+          defines.sprites.close.black):style("helfima_lib_button_menu_sm_red"):tooltip({ "helfima-lib.delete" }))
       ---col class
       GuiElement.add(gui_table,
         GuiLabel("class", key1):caption({ "", defines.mod.tags.color.orange, defines.mod.tags.font.default_large_bold,
@@ -328,7 +322,7 @@ function AdminPanel:add_cache_list_row(gui_table, class_name, key1, key2, key3, 
     if class_name == "users" and (key2 == "translated" or key2 == "cache") then
       GuiElement.add(cell_action,
         GuiButton(self.classname, "delete-cache", class_name, key1, key2):sprite("menu", defines.sprites.close.black,
-          defines.sprites.close.black):style("helmod_button_menu_sm_red"):tooltip({ "tooltip.remove-element" }))
+          defines.sprites.close.black):style("helfima_lib_button_menu_sm_red"):tooltip({ "helfima-lib.delete" }))
       ---col class
       GuiElement.add(gui_table,
         GuiLabel("class", key1, key2):caption({ "", defines.mod.tags.color.orange, defines.mod.tags.font.default_bold,
@@ -348,7 +342,7 @@ function AdminPanel:add_cache_list_row(gui_table, class_name, key1, key2, key3, 
     if class_name == "users" then
       GuiElement.add(cell_action,
         GuiButton(self.classname, "delete-cache", class_name, key1, key2, key3):sprite("menu",
-          defines.sprites.close.black, defines.sprites.close.black):style("helmod_button_menu_sm_red"):tooltip({ "tooltip.remove-element" }))
+          defines.sprites.close.black, defines.sprites.close.black):style("helfima_lib_button_menu_sm_red"):tooltip({ "helfima-lib.delete" }))
       ---col class
       GuiElement.add(gui_table,
         GuiLabel("class", key1, key2, key3):caption({ "", defines.mod.tags.color.orange,
@@ -403,7 +397,7 @@ function AdminPanel:create_tree(parent, list, expand)
   for k, info in pairs(data_info) do
     local tree_branch = GuiElement.add(parent, GuiFlowH())
     -- vertical bar
-    local vbar = GuiElement.add(tree_branch, GuiFrameV("vbar"):style("blurry_frame"))
+    local vbar = GuiElement.add(tree_branch, GuiFrameV("vbar"):style("helfima_lib_frame_colored", color_name, color_index))
     vbar.style.width = bar_thickness
     vbar.style.left_margin = 15
     if index == size then
@@ -416,7 +410,7 @@ function AdminPanel:create_tree(parent, list, expand)
     local content = GuiElement.add(tree_branch, GuiFlowV("content"))
     -- header
     local header = GuiElement.add(content, GuiFlowH("header"))
-    local hbar = GuiElement.add(header, GuiFrameV("hbar"):style("subheader_frame"))
+    local hbar = GuiElement.add(header, GuiFrameV("hbar"):style("helfima_lib_frame_colored", color_name, color_index))
     hbar.style.width = 5
     hbar.style.height = bar_thickness
     hbar.style.top_margin = 10

@@ -1,5 +1,5 @@
 local function sprite_mipmap(name, size, count)
-    local icon_name = "Helfima-Lib-" .. name
+    local icon_name = "helfima-lib-" .. name
     return {
         type = "sprite",
         name = icon_name,

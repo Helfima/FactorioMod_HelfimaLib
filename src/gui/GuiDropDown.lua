@@ -3,7 +3,7 @@
 ---@class GuiDropDown : GuiElement
 GuiDropDown = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
-  base.classname = "HMGuiDropDown"
+  base.classname = "HLGuiDropDown"
   base.options.type = "drop-down"
 end)
 

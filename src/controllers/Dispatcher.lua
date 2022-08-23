@@ -80,15 +80,13 @@ function module:on_gui_action(event)
         if event.action == "CLOSE" then
             self:send(defines.mod.events.on_gui_close, event, event.classname)
         else
-            if event.element.name == defines.mod.action.main then
-                local view = Form.views[event.classname]
-                if view ~= nil then
-                    if view:is_opened() then
-                        self:send(defines.mod.events.on_gui_close, event, event.classname)
-                    else
-                        self:send(defines.mod.events.on_gui_open, event, event.classname)
-                        self:send(defines.mod.events.on_gui_event, event, event.classname)
-                    end
+            local view = Form.views[event.classname]
+            if view ~= nil and view.mod_menu == true then
+                if view:is_opened() then
+                    self:send(defines.mod.events.on_gui_close, event, event.classname)
+                else
+                    self:send(defines.mod.events.on_gui_open, event, event.classname)
+                    self:send(defines.mod.events.on_gui_event, event, event.classname)
                 end
             elseif event.action == "OPEN" and event.continue ~= true then
                 self:send(defines.mod.events.on_gui_open, event, event.classname)
@@ -100,22 +98,55 @@ function module:on_gui_action(event)
     end
 end
 
-Dispatcher = module("HelLibDispatcher")
-Dispatcher:bind(defines.mod.events.on_gui_action, Dispatcher, Dispatcher.on_gui_action)
-
--------------------------------------------------------------------------------
----EventController callback
----@param event_type string|defines.events
----@param callback function
-function Dispatcher.pcall_event(event_type, callback)
-    local ok, err = pcall(function()
-        script.on_event(event_type, callback)
-    end)
-    if not (ok) then
-        log("HelLib: defined event " .. event_type .. " is not valid!")
-        log(err)
+---@param event EventModData
+function module:on_gui_reset(event)
+    if defines.mod.mod_name == nil then return end
+    for _, locate in pairs(defines.mod.views.locate) do
+        local lua_gui_element = Player.get_gui(locate)
+        for _, children_name in pairs(lua_gui_element.children_names) do
+            local lua_element = lua_gui_element[children_name]
+            if lua_element:get_mod() == defines.mod.mod_name then
+                lua_element.destroy()
+            end
+        end
     end
 end
+
+---@param event EventData.on_console_command
+function module:on_command(event)
+    if event.parameters == defines.mod.command.action.menu then
+        Dispatcher:send(defines.mod.events.on_gui_mod_menu, event)
+    end
+    if event.parameters == defines.mod.command.action.reset_ui then
+        Dispatcher:send(defines.mod.events.on_gui_reset, event, Dispatcher.classname)
+    end
+end
+
+function module.on_init()
+end
+
+function module.on_load()
+end
+
+---comment
+---@param data ConfigurationChangedData
+function module.on_configuration_changed(data)
+    if not data or not data.mod_changes then
+        return
+    end
+    if data.mod_changes[defines.mod.mod_name] then
+        --initialise au chargement d'une partie existante
+        for _, player in pairs(game.players) do
+            Player.set(player)
+            Dispatcher:send(defines.mod.events.on_gui_mod_menu, data)
+        end
+    end
+end
+
+Dispatcher = module("HLDispatcher")
+Dispatcher:bind(defines.mod.events.on_gui_action, Dispatcher, Dispatcher.on_gui_action)
+Dispatcher:bind(defines.mod.events.on_gui_reset, Dispatcher, Dispatcher.on_gui_reset)
+Dispatcher:bind(defines.mod.events.on_console_command, Dispatcher, Dispatcher.on_command)
 
 -------------------------------------------------------------------------------
 ---On click button
@@ -157,6 +188,32 @@ function Dispatcher.on_gui_click(event)
     end
 end
 
+---@param event EventData.on_player_created
+function Dispatcher.on_player_created(event)
+    if event ~= nil and event.player_index ~= nil then
+        Player.load(event)
+        Dispatcher:send(defines.mod.events.on_gui_mod_menu, event)
+    end
+end
+
+---@param event EventData.on_player_joined_game
+function Dispatcher.on_player_joined_game(event)
+    if event ~= nil and event.player_index ~= nil then
+        Player.load(event)
+        Dispatcher:send(defines.mod.events.on_gui_mod_menu, event)
+    end
+end
+
+---@param event EventData.on_console_command
+function Dispatcher.on_console_command(event)
+    if event ~= nil and event.player_index ~= nil then
+        if event.command == defines.mod.tag then
+            Player.load(event)
+            Dispatcher:send(defines.mod.events.on_console_command, event, Dispatcher.classname)
+        end
+    end
+end
+
 Dispatcher.events =
 {
     [defines.events.on_gui_click] = Dispatcher.on_gui_click_button,
@@ -170,10 +227,11 @@ Dispatcher.events =
     [defines.events.on_gui_checked_state_changed] = Dispatcher.on_gui_click,
     [defines.events.on_gui_selected_tab_changed] = Dispatcher.on_gui_click,
 
-    -- [defines.events.on_player_created] = Dispatcher.on_player_created,
-    -- [defines.events.on_player_joined_game] = Dispatcher.on_player_joined_game,
+    [defines.events.on_player_created] = Dispatcher.on_player_created,
+    [defines.events.on_player_joined_game] = Dispatcher.on_player_joined_game,
+    [defines.events.on_console_command] = Dispatcher.on_console_command,
+
     -- [defines.events.on_runtime_mod_setting_changed] = Dispatcher.on_runtime_mod_setting_changed,
-    -- [defines.events.on_console_command] = Dispatcher.on_console_command,
     -- [defines.events.on_string_translated] = Dispatcher.on_string_translated,
     -- [defines.events.on_lua_shortcut] = Dispatcher.on_lua_shortcut,
 }
