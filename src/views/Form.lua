@@ -193,9 +193,9 @@ function Form:get_frame_panel(panel_name, style, direction)
   end
   local frame_panel = nil
   if direction == "horizontal" then
-    frame_panel = GuiElement.add(content_panel, GuiFrameH(panel_name):style(style or defines.mod.styles.frame))
+    frame_panel = GuiElement.add(content_panel, GuiFrameH(panel_name):style(style or defines.mod.styles.frame.default))
   else
-    frame_panel = GuiElement.add(content_panel, GuiFrameV(panel_name):style(style or defines.mod.styles.frame))
+    frame_panel = GuiElement.add(content_panel, GuiFrameV(panel_name):style(style or defines.mod.styles.frame.default))
   end
   frame_panel.style.horizontally_stretchable = true
   return frame_panel
@@ -244,6 +244,40 @@ function Form:get_frame_deep_panel(panel_name, direction)
   return self:get_frame_panel(panel_name, defines.mod.styles.frame.inside_deep, direction)
 end
 
+
+-------------------------------------------------------------------------------
+---Get or create tab panel
+---@return LuaGuiElement
+function Form:get_tab_pane()
+    local content_panel = self:get_flow_panel("panel", "vertical")
+    local panel_name = "tab_panel"
+    local name = table.concat({ self.classname, "change-tab", panel_name }, "=")
+    if content_panel[name] ~= nil and content_panel[name].valid then
+        return content_panel[name]
+    end
+    local panel = GuiElement.add(content_panel, GuiTabPane(self.classname, "change-tab", panel_name))
+    return panel
+end
+
+-------------------------------------------------------------------------------
+---Get or create tab panel
+---@param panel_name string
+---@param caption string|table
+---@return LuaGuiElement
+function Form:get_tab(panel_name, caption)
+    local content_panel = self:get_tab_pane()
+    local scroll_name = "scroll-" .. panel_name
+    if content_panel[panel_name] ~= nil and content_panel[panel_name].valid then
+        return content_panel[scroll_name]
+    end
+    local tab_panel = GuiElement.add(content_panel, GuiTab(panel_name):caption(caption))
+    local scroll_panel = GuiElement.add(content_panel, GuiScroll(scroll_name):style("scroll_pane"):policy(true))
+    content_panel.add_tab(tab_panel, scroll_panel)
+    scroll_panel.style.horizontally_stretchable = true
+    scroll_panel.style.vertically_stretchable = true
+    return scroll_panel
+end
+
 -------------------------------------------------------------------------------
 ---Is opened panel
 ---@return boolean
@@ -263,6 +297,19 @@ function Form:event(event)
   if not (self:is_opened()) then return end
   self:on_event_form(event)
   self:on_event(event)
+  self:on_event_extensions(event)
+end
+
+-------------------------------------------------------------------------------
+---On event
+---@param event EventModData
+function Form:on_event(event)
+end
+
+-------------------------------------------------------------------------------
+---On event extensions, is use for extension view
+---@param event EventModData
+function Form:on_event_extensions(event)
 end
 
 -------------------------------------------------------------------------------
@@ -301,12 +348,6 @@ end
 ---Close
 ---@param event EventModData
 function Form:on_close(event)
-end
-
--------------------------------------------------------------------------------
----On event
----@param event EventModData
-function Form:on_event(event)
 end
 
 -------------------------------------------------------------------------------
@@ -352,6 +393,7 @@ function Form:update(event)
   if self.auto_clear then content_panel.clear() end
   self:update_menu_header(event)
   self:on_update(event)
+  self:on_update_extensions(event)
   self:update_location(event)
 end
 
@@ -359,6 +401,12 @@ end
 ---On Update
 ---@param event EventModData
 function Form:on_update(event)
+end
+
+-------------------------------------------------------------------------------
+---On Update extensions, is use for extension view
+---@param event EventModData
+function Form:on_update_extensions(event)
 end
 
 -------------------------------------------------------------------------------

@@ -81,7 +81,7 @@ function module:on_gui_action(event)
             self:send(defines.mod.events.on_gui_close, event, event.classname)
         else
             local view = Form.views[event.classname]
-            if view ~= nil and view.mod_menu == true then
+            if view ~= nil and view.mod_menu == true and event.action == "OPEN" then
                 if view:is_opened() then
                     self:send(defines.mod.events.on_gui_close, event, event.classname)
                 else

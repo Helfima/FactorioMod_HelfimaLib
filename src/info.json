@@ -4,7 +4,7 @@
   "title": "Helfima's Library",
   "author": "Helfima",
   "contact": "",
-  "homepage": "",
+  "homepage": "https://github.com/Helfima/FactorioMod_HelfimaLib",
   "description": "Helfima's Library.",
   "dependencies": ["base >= 1.1.0"],
   "factorio_version": "1.1"
