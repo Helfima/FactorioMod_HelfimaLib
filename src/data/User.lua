@@ -112,7 +112,7 @@ end
 ---Set parameter
 ---@param property string
 ---@param value any
----@return nil
+---@return any|nil
 function User.set_parameter(property, value)
   if property == nil then
     return nil

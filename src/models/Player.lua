@@ -18,6 +18,14 @@ end
 
 -------------------------------------------------------------------------------
 ---Print message
+function Player.print_localized(message)
+  if Lua_player ~= nil then
+    Lua_player.print(message)
+  end
+end
+
+-------------------------------------------------------------------------------
+---Print message
 function Player.printf(format, ...)
   if Lua_player ~= nil then
     Lua_player.print(string.format(format, ...))

@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 ---Event Dispatcher
 ---
----@class Dispatcher
+---@class Dispatcher : Object
 ---@field handlers {[string]:{[string]:{class:Object, handlers:{[uint]:function}}}}
 local module = newclass(Object, function(base, classname)
     Object.init(base, classname)
@@ -46,8 +46,7 @@ end
 ---Send
 ---@param event_type string
 ---@param data table
----@param classname string
----
+---@param classname? string
 function module:send(event_type, data, classname)
     local data = data or {}
     local ok, err = pcall(function()
@@ -143,6 +142,7 @@ function module.on_configuration_changed(data)
     end
 end
 
+---@type Dispatcher
 Dispatcher = module("HLDispatcher")
 Dispatcher:bind(defines.mod.events.on_gui_action, Dispatcher, Dispatcher.on_gui_action)
 Dispatcher:bind(defines.mod.events.on_gui_reset, Dispatcher, Dispatcher.on_gui_reset)
