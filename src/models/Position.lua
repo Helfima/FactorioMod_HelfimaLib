@@ -8,8 +8,9 @@ local Position = {
 
 ---Return gps string
 ---@param position MapPosition
-function Position.get_gps_string(position)
-    local gps = string.format("[gps=%s,%s]", position.x, position.y)
+---@param surface LuaSurface
+function Position.get_gps_string(position, surface)
+    local gps = string.format("[gps=%s,%s,%s]", position.x, position.y, surface.name)
     return gps
 end
 
