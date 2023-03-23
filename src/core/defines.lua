@@ -21,7 +21,7 @@ defines.mod.events.pattern = "([^=]*)=?([^=]*)=?([^=]*)=?([^=]*)=?([^=]*)=?([^=]
 defines.mod.events.clickable_type = {}
 defines.mod.events.clickable_type["button"] = true
 defines.mod.events.clickable_type["sprite-button"] = true
-defines.mod.events.clickable_type["choose-elem-button"] = true
+defines.mod.events.clickable_type["choose-elem-button"] = false
 
 defines.mod.command = {}
 defines.mod.command.action = {}
@@ -137,6 +137,7 @@ defines.mod.views.locate.left="left"
 defines.mod.views.locate.center="center"
 defines.mod.views.locate.goal="goal"
 defines.mod.views.locate.screen="screen"
+defines.mod.views.locate.relative="relative"
 
 defines.mod.tags = {}
 defines.mod.tags.color = {}

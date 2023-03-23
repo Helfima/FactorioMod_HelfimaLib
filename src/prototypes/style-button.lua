@@ -162,6 +162,7 @@ local function compositionIcon(filename, corner_size, position)
 end
 
 local corner_size = {3, 3}
+
 default_gui["helfima_lib_button_default"] = {
   type = "button_style",
   font = "default",
@@ -402,3 +403,86 @@ for _,style in pairs(style_list) do
     }
   end
 end
+
+local blank_image= {
+  filename = "__HelfimaLib__/graphics/blank.png",
+  priority = "very-low",
+  width = 1,
+  height = 1,
+  frame_count = 1,
+  scale = 8,
+}
+
+default_gui["helmod_sort_checkbox_inactive"] = {
+  type = "checkbox_style",
+  font = "default",
+  padding = 0,
+  text_padding = 5,
+  default_graphical_set = blank_image,
+  hovered_graphical_set = blank_image,
+  clicked_graphical_set = blank_image,
+  disabled_graphical_set = blank_image,
+  selected_graphical_set = blank_image,
+  selected_hovered_graphical_set = blank_image,
+  selected_clicked_graphical_set = blank_image,
+  selected_disabled_graphical_set = blank_image,
+  checkmark = blank_image,
+  disabled_checkmark = blank_image
+}
+
+default_gui["helmod_sort_checkbox"] = {
+  type = "checkbox_style",
+  parent = "helmod_sort_checkbox_inactive",
+  default_graphical_set = {
+    filename = "__core__/graphics/arrows/table-header-sort-arrow-down-white.png",
+    size = { 16, 16 },
+    scale = 0.5,
+  },
+  hovered_graphical_set = {
+    filename = "__core__/graphics/arrows/table-header-sort-arrow-down-hover.png",
+    size = { 16, 16 },
+    scale = 0.5,
+  },
+  clicked_graphical_set = {
+    filename = "__core__/graphics/arrows/table-header-sort-arrow-down-white.png",
+    size = { 16, 16 },
+    scale = 0.5,
+  },
+  disabled_graphical_set = {
+    filename = "__core__/graphics/arrows/table-header-sort-arrow-down-white.png",
+    size = { 16, 16 },
+    scale = 0.5,
+  },
+  selected_graphical_set = {
+    filename = "__core__/graphics/arrows/table-header-sort-arrow-up-white.png",
+    size = { 16, 16 },
+    scale = 0.5,
+  },
+  selected_hovered_graphical_set = {
+    filename = "__core__/graphics/arrows/table-header-sort-arrow-up-hover.png",
+    size = { 16, 16 },
+    scale = 0.5,
+  },
+  selected_clicked_graphical_set = {
+    filename = "__core__/graphics/arrows/table-header-sort-arrow-up-white.png",
+    size = { 16, 16 },
+    scale = 0.5,
+  },
+  selected_disabled_graphical_set = {
+    filename = "__core__/graphics/arrows/table-header-sort-arrow-up-white.png",
+    size = { 16, 16 },
+    scale = 0.5,
+  }
+}
+
+default_gui["helmod_sort_checkbox_bold_inactive"] = {
+  type = "checkbox_style",
+  parent = "helmod_sort_checkbox_inactive",
+  font = "default-bold"
+}
+
+default_gui["helmod_sort_checkbox_bold"] = {
+  type = "checkbox_style",
+  parent = "helmod_sort_checkbox",
+  font = "default-bold"
+}
