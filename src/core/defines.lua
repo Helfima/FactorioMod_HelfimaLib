@@ -14,6 +14,7 @@ defines.mod.events.on_gui_error = "on_gui_error"
 defines.mod.events.on_gui_message = "on_gui_message"
 defines.mod.events.on_gui_mod_menu = "on_gui_mod_menu"
 defines.mod.events.on_gui_reset = "on_gui_reset"
+defines.mod.events.on_before_delete_cache = "on_before_delete_cache"
 defines.mod.events.on_console_command = "on_console_command"
 
 defines.mod.events.pattern = "([^=]*)=?([^=]*)=?([^=]*)=?([^=]*)=?([^=]*)=?([^=]*)=?([^=]*)"

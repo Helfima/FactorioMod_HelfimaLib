@@ -24,3 +24,7 @@ local newclass = {
 ---@field name string
 ---@field type string
 ---@field amount uint
+
+---@class EntityFiltersData
+---@field name string
+---@field type string

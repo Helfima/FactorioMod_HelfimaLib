@@ -8,7 +8,6 @@
 ---@field panel_close boolean
 ---@field add_special_button boolean
 ---@field mod_menu boolean
----@field anchor GuiAnchor
 ---@field views {[string] : Form}
 Form = newclass(Object, function(base, classname)
     Object.init(base, classname)
@@ -157,9 +156,7 @@ function Form:get_panel()
     ---main panel
     ---@type GuiFrame
     local main_frame = GuiFrameV(panel_name):style(defines.mod.styles.frame.inner_outer)
-    if self.anchor ~= nil then
-        main_frame:anchor(self.anchor.gui, self.anchor.position)
-    end
+    
     local flow_panel = GuiElement.add(parent_panel, main_frame)
     flow_panel.style.horizontally_stretchable = true
     flow_panel.style.vertically_stretchable = true
@@ -175,9 +172,8 @@ function Form:get_panel()
         GuiFrameH("title_panel"):caption(self.panel_caption or self.classname):style(defines.mod.styles.frame.invisible))
     title_panel.style.horizontally_stretchable = true
     title_panel.style.height = 28
-    if self.anchor == nil then
-        title_panel.drag_target = flow_panel
-    end
+
+    title_panel.drag_target = flow_panel
 
     local menu_panel = GuiElement.add(header_panel, GuiFlowH(menu_name))
     menu_panel.style.horizontal_spacing = 10
@@ -368,7 +364,7 @@ end
 function Form:open(event)
     self:style()
     self:on_open_before(event)
-    if self:is_opened() and self.anchor == nil then
+    if not(self:is_opened()) then
         local flow_panel = self:get_panel()
         flow_panel.bring_to_front()
         return true

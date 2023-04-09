@@ -28,6 +28,7 @@ Resource = require "__HelfimaLib__.models.Resource"
 
 require "__HelfimaLib__.controllers.Dispatcher"
 require "__HelfimaLib__.views.Form"
+require "__HelfimaLib__.views.FormRelative"
 require "__HelfimaLib__.views.AdminPanel"
 
 Form.views["HLAdmin"] = AdminPanel("HLAdmin")

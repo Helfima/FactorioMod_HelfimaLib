@@ -9,7 +9,7 @@ GuiFrame = newclass(GuiElement, function(base, ...)
 end)
 
 -------------------------------------------------------------------------------
----Set style
+---Set anchor
 ---@param gui defines.relative_gui_type
 ---@param position defines.relative_gui_position
 ---@return GuiElement

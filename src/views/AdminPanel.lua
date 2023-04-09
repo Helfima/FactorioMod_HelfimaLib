@@ -468,6 +468,7 @@ function AdminPanel:on_event(event)
     end
 
     if event.action == "delete-cache" then
+        Dispatcher:send(defines.mod.events.on_before_delete_cache, event, nil)
         if event.item1 ~= nil and global[event.item1] ~= nil then
             if event.item2 == "" and event.item3 == "" and event.item4 == "" then
                 global[event.item1] = nil
@@ -482,7 +483,6 @@ function AdminPanel:on_event(event)
         else
             Player.print("Not found to delete:", event.item1, event.item2, event.item3, event.item4)
         end
-        --Controller:send("on_gui_update", event)
     end
 
 end

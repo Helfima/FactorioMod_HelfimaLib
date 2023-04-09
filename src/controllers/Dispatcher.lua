@@ -95,6 +95,9 @@ function module:on_gui_action(event)
             end
         end
     end
+    if FormRelative.views[event.classname] then
+        self:send(defines.mod.events.on_gui_event, event, event.classname)
+    end
 end
 
 ---@param event EventModData
@@ -214,6 +217,29 @@ function Dispatcher.on_console_command(event)
     end
 end
 
+function Dispatcher.on_gui_opened(event)
+    if event ~= nil and event.entity ~= nil and event.player_index ~= nil then
+        Player.load(event)
+        for _, relative_form in pairs(FormRelative.views) do
+            if relative_form:check_valid(event) then
+                Dispatcher:send(defines.mod.events.on_gui_open, event, relative_form.classname)
+                Dispatcher:send(defines.mod.events.on_gui_event, event, relative_form.classname)
+            end
+        end
+    end
+end
+
+function Dispatcher.on_gui_closed(event)
+    if event ~= nil and event.entity ~= nil and event.player_index ~= nil then
+        Player.load(event)
+        for _, relative_form in pairs(FormRelative.views) do
+            if relative_form:check_valid(event) then
+                Dispatcher:send(defines.mod.events.on_gui_close, event, relative_form.classname)
+            end
+        end
+    end
+end
+
 Dispatcher.events =
 {
     [defines.events.on_gui_click] = Dispatcher.on_gui_click_button,
@@ -230,6 +256,9 @@ Dispatcher.events =
     [defines.events.on_player_created] = Dispatcher.on_player_created,
     [defines.events.on_player_joined_game] = Dispatcher.on_player_joined_game,
     [defines.events.on_console_command] = Dispatcher.on_console_command,
+
+    [defines.events.on_gui_opened] = Dispatcher.on_gui_opened,
+    [defines.events.on_gui_closed] = Dispatcher.on_gui_closed,
 
     -- [defines.events.on_runtime_mod_setting_changed] = Dispatcher.on_runtime_mod_setting_changed,
     -- [defines.events.on_string_translated] = Dispatcher.on_string_translated,
