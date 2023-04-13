@@ -168,3 +168,6 @@ defines.mod.cardinal.north = 1
 defines.mod.cardinal.east = 2
 defines.mod.cardinal.south = 4
 defines.mod.cardinal.west = 8
+
+defines.mod.index_gui_type = {}
+defines.mod.index_gui_type.controller_gui=3

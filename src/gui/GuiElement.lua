@@ -207,3 +207,18 @@ function GuiElement.setInputText(element, value)
     element.text = value
   end
 end
+
+-------------------------------------------------------------------------------
+---Find element
+---@param element LuaGuiElement
+---@param search string
+---@return LuaGuiElement
+function GuiElement.find_element(element, search)
+  if element ~= nil then
+    for _, children_name in pairs(element.children_names) do
+      if string.find(children_name, search, 0, true) then
+        return element[children_name]
+      end
+    end
+  end
+end

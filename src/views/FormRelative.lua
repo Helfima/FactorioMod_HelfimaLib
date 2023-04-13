@@ -19,6 +19,7 @@ FormRelative = newclass(Object, function(base, classname)
     base.content_verticaly = true
     base.mod_menu = false
     base.vertically_stretchable = false
+    base.horizontally_stretchable = false
 end)
 
 FormRelative.views = {}
@@ -97,7 +98,7 @@ function FormRelative:get_panel()
     local main_frame = GuiFrameV(panel_name):anchor(self.anchor.gui, self.anchor.position):style(defines.mod.styles.frame.inner_outer)
     
     local flow_panel = GuiElement.add(parent_panel, main_frame)
-    flow_panel.style.horizontally_stretchable = true
+    flow_panel.style.horizontally_stretchable = self.horizontally_stretchable
     flow_panel.style.vertically_stretchable = self.vertically_stretchable
 
     --self:set_style_flow(flow_panel)
@@ -117,10 +118,16 @@ function FormRelative:get_panel()
     menu_panel.style.horizontal_spacing = 10
     menu_panel.style.horizontal_align = "right"
 
-    local content_panel
-    content_panel = GuiElement.add(flow_panel, GuiFrameV(inner_name):style(self.inner_frame))
-    content_panel.style.vertically_stretchable = self.vertically_stretchable
-    content_panel.style.horizontally_stretchable = true
+    local content_panel = nil
+    if self.content_verticaly then
+        content_panel = GuiElement.add(flow_panel, GuiFrameV(inner_name):style(self.inner_frame))
+        content_panel.style.vertically_stretchable = self.vertically_stretchable
+        content_panel.style.horizontally_stretchable = self.horizontally_stretchable
+    else
+        content_panel = GuiElement.add(flow_panel, GuiFrameH(inner_name):style(self.inner_frame))
+        content_panel.style.vertically_stretchable = self.vertically_stretchable
+        content_panel.style.horizontally_stretchable = self.horizontally_stretchable
+    end
     return flow_panel, content_panel, menu_panel
 end
 

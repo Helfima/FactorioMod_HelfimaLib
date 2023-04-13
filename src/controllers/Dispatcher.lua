@@ -218,24 +218,36 @@ function Dispatcher.on_console_command(event)
 end
 
 function Dispatcher.on_gui_opened(event)
-    if event ~= nil and event.entity ~= nil and event.player_index ~= nil then
+    if event ~= nil and event.player_index ~= nil then
         Player.load(event)
-        for _, relative_form in pairs(FormRelative.views) do
-            if relative_form:check_valid(event) then
-                Dispatcher:send(defines.mod.events.on_gui_open, event, relative_form.classname)
-                Dispatcher:send(defines.mod.events.on_gui_event, event, relative_form.classname)
+        local ok, err = pcall(function()
+            for _, relative_form in pairs(FormRelative.views) do
+                if relative_form:check_valid(event) then
+                    Dispatcher:send(defines.mod.events.on_gui_open, event, relative_form.classname)
+                    Dispatcher:send(defines.mod.events.on_gui_event, event, relative_form.classname)
+                end
             end
+        end)
+        if not (ok) then
+            Player.print(err)
+            log(err)
         end
     end
 end
 
 function Dispatcher.on_gui_closed(event)
-    if event ~= nil and event.entity ~= nil and event.player_index ~= nil then
+    if event ~= nil and event.player_index ~= nil then
         Player.load(event)
-        for _, relative_form in pairs(FormRelative.views) do
-            if relative_form:check_valid(event) then
-                Dispatcher:send(defines.mod.events.on_gui_close, event, relative_form.classname)
+        local ok, err = pcall(function()
+            for _, relative_form in pairs(FormRelative.views) do
+                if relative_form:check_valid(event) then
+                    Dispatcher:send(defines.mod.events.on_gui_close, event, relative_form.classname)
+                end
             end
+        end)
+        if not (ok) then
+            Player.print(err)
+            log(err)
         end
     end
 end
