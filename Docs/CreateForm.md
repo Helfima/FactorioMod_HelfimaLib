@@ -12,7 +12,7 @@ ResourcesView = newclass(Form, function(base, classname)
 end)
 ```
 
-Change UI size, we ca presize the Frame
+Change UI size, we can presize the Frame
 ```lua
 -------------------------------------------------------------------------------
 ---On Style
@@ -71,7 +71,7 @@ Execute action on event, here your add response of dispatcher event
 ---@param event EventModData
 function ResourcesView:on_event(event)
 
-    if event.action == "you_action_name" then
+    if event.action == "your_action_name" then
         --- your code ---
         
         --- this refresh the UI
