@@ -7,7 +7,10 @@
 ---@field auto_clear boolean
 ---@field panel_close boolean
 ---@field add_special_button boolean
+---@field content_verticaly boolean
+---@field content_padding number
 ---@field mod_menu boolean
+---@field submenu_enabled boolean
 ---@field anchor GuiAnchor
 ---@field views {[string] : FormRelative}
 FormRelative = newclass(Object, function(base, classname)
@@ -17,7 +20,9 @@ FormRelative = newclass(Object, function(base, classname)
     base.inner_frame = defines.mod.styles.frame.inner
     base.locate = defines.mod.views.locate.relative
     base.content_verticaly = true
+    base.content_padding = 8
     base.mod_menu = false
+    base.submenu_enabled = false
     base.vertically_stretchable = false
     base.horizontally_stretchable = false
 end)
@@ -78,15 +83,19 @@ end
 
 --------------------------------------------------------------------------------
 ---Get the parent panel
----@return LuaGuiElement, LuaGuiElement, LuaGuiElement
+---@return LuaGuiElement, LuaGuiElement, LuaGuiElement, LuaGuiElement
 function FormRelative:get_panel()
     local panel_name = self:get_panel_name()
     local inner_name = "inner"
+    local content_name = "content"
     local header_name = "header_panel"
+    local submenu_name = "submenu_name"
     local menu_name = "menu_panel"
     local parent_panel = self:get_parent_panel()
     if parent_panel[panel_name] ~= nil and parent_panel[panel_name].valid then
-        return parent_panel[panel_name], parent_panel[panel_name][inner_name],
+        return parent_panel[panel_name], 
+            parent_panel[panel_name][inner_name][content_name],
+            parent_panel[panel_name][inner_name][submenu_name],
             parent_panel[panel_name][header_name][menu_name]
     end
 
@@ -118,19 +127,60 @@ function FormRelative:get_panel()
     menu_panel.style.horizontal_spacing = 10
     menu_panel.style.horizontal_align = "right"
 
+    local inner_panel = nil
+    if self.content_verticaly then
+        inner_panel = GuiElement.add(flow_panel, GuiFrameV(inner_name):style(self.inner_frame))
+    else
+        inner_panel = GuiElement.add(flow_panel, GuiFrameH(inner_name):style(self.inner_frame))
+    end
+    inner_panel.style.vertically_stretchable = self.vertically_stretchable
+    inner_panel.style.horizontally_stretchable = self.horizontally_stretchable
+
+    local submenu_panel = nil
+    if self.submenu_enabled then
+        submenu_panel = GuiElement.add(inner_panel, GuiFrameH(submenu_name):style(defines.mod.styles.frame.subheader_frame))
+        submenu_panel.style.height = 36
+        submenu_panel.style.horizontally_stretchable = true
+    end
+
     local content_panel = nil
     if self.content_verticaly then
-        content_panel = GuiElement.add(flow_panel, GuiFrameV(inner_name):style(self.inner_frame))
-        content_panel.style.vertically_stretchable = self.vertically_stretchable
-        content_panel.style.horizontally_stretchable = self.horizontally_stretchable
+        content_panel = GuiElement.add(inner_panel, GuiFrameV(content_name):style(defines.mod.styles.frame.invisible))
     else
-        content_panel = GuiElement.add(flow_panel, GuiFrameH(inner_name):style(self.inner_frame))
-        content_panel.style.vertically_stretchable = self.vertically_stretchable
-        content_panel.style.horizontally_stretchable = self.horizontally_stretchable
+        content_panel = GuiElement.add(inner_panel, GuiFrameH(content_name):style(defines.mod.styles.frame.invisible))
     end
-    return flow_panel, content_panel, menu_panel
+    content_panel.style.padding = self.content_padding
+
+    return flow_panel, content_panel, submenu_panel, menu_panel
 end
 
+---Get the flow panel
+---@return LuaGuiElement
+function FormRelative:get_flow_panel()
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
+    return flow_panel
+end
+
+---Get the content panel
+---@return LuaGuiElement
+function FormRelative:get_content_panel()
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
+    return content_panel
+end
+
+---Get the submenu panel
+---@return LuaGuiElement
+function FormRelative:get_submenu_panel()
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
+    return submenu_panel
+end
+
+---Get the menu panel
+---@return LuaGuiElement
+function FormRelative:get_menu_panel()
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
+    return menu_panel
+end
 -------------------------------------------------------------------------------
 ---Style
 ---<br>Don't use this function! use Form:on_style()
@@ -173,8 +223,13 @@ end
 ---@param event EventModData
 function FormRelative:update(event)
     if not (self:is_opened()) then return end
-    local flow_panel, content_panel, menu_panel = self:get_panel()
-    if self.auto_clear then content_panel.clear() end
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
+    if self.auto_clear then
+        content_panel.clear()
+        if self.submenu_enabled then
+            submenu_panel.clear()
+        end
+    end
     self:on_update(event)
 end
 
@@ -205,7 +260,7 @@ end
 ---@param event EventModData
 function FormRelative:close(event)
     if not (self:is_opened()) then return end
-    local flow_panel, content_panel, menu_panel = self:get_panel()
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
     flow_panel.destroy()
     self:on_close(event)
 end

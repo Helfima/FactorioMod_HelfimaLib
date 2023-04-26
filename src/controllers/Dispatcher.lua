@@ -223,6 +223,8 @@ function Dispatcher.on_gui_opened(event)
         local ok, err = pcall(function()
             for _, relative_form in pairs(FormRelative.views) do
                 if relative_form:check_valid(event) then
+                    -- prevent close
+                    Dispatcher:send(defines.mod.events.on_gui_close, event, relative_form.classname)
                     Dispatcher:send(defines.mod.events.on_gui_open, event, relative_form.classname)
                     Dispatcher:send(defines.mod.events.on_gui_event, event, relative_form.classname)
                 end

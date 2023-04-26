@@ -7,7 +7,10 @@
 ---@field auto_clear boolean
 ---@field panel_close boolean
 ---@field add_special_button boolean
+---@field content_verticaly boolean
+---@field content_padding number
 ---@field mod_menu boolean
+---@field submenu_enabled boolean
 ---@field views {[string] : Form}
 Form = newclass(Object, function(base, classname)
     Object.init(base, classname)
@@ -16,10 +19,12 @@ Form = newclass(Object, function(base, classname)
     base.inner_frame = defines.mod.styles.frame.inner
     base.locate = defines.mod.views.locate.screen
     base.content_verticaly = true
+    base.content_padding = 8
     base.auto_clear = true
     base.panel_close = true
     base.add_special_button = true
     base.mod_menu = false
+    base.submenu_enabled = false
 end)
 
 Form.views = {}
@@ -142,15 +147,19 @@ end
 
 --------------------------------------------------------------------------------
 ---Get the parent panel
----@return LuaGuiElement, LuaGuiElement, LuaGuiElement
+---@return LuaGuiElement, LuaGuiElement, LuaGuiElement, LuaGuiElement
 function Form:get_panel()
     local panel_name = self:get_panel_name()
     local inner_name = "inner"
+    local content_name = "content"
     local header_name = "header_panel"
     local menu_name = "menu_panel"
+    local submenu_name = "submenu_name"
     local parent_panel = self:get_parent_panel()
     if parent_panel[panel_name] ~= nil and parent_panel[panel_name].valid then
-        return parent_panel[panel_name], parent_panel[panel_name][inner_name],
+        return parent_panel[panel_name],
+            parent_panel[panel_name][inner_name][content_name],
+            parent_panel[panel_name][inner_name][submenu_name],
             parent_panel[panel_name][header_name][menu_name]
     end
     ---main panel
@@ -179,11 +188,26 @@ function Form:get_panel()
     menu_panel.style.horizontal_spacing = 10
     menu_panel.style.horizontal_align = "right"
 
-    local content_panel
-    content_panel = GuiElement.add(flow_panel, GuiFrameV(inner_name):style(self.inner_frame))
+    local inner_panel = GuiElement.add(flow_panel, GuiFrameV(inner_name):style(self.inner_frame))
+
+    local submenu_panel = nil
+    if self.submenu_enabled then
+        submenu_panel = GuiElement.add(inner_panel, GuiFrameH(submenu_name):style(defines.mod.styles.frame.subheader_frame))
+        submenu_panel.style.height = 36
+        submenu_panel.style.horizontally_stretchable = true
+    end
+
+    local content_panel = nil
+    if self.content_verticaly then
+        content_panel = GuiElement.add(inner_panel, GuiFrameV(content_name):style(defines.mod.styles.frame.invisible))
+    else
+        content_panel = GuiElement.add(inner_panel, GuiFrameH(content_name):style(defines.mod.styles.frame.invisible))
+    end
+    content_panel.style.padding = self.content_padding
     content_panel.style.vertically_stretchable = true
     content_panel.style.horizontally_stretchable = true
-    return flow_panel, content_panel, menu_panel
+
+    return flow_panel, content_panel, submenu_panel, menu_panel
 end
 
 -------------------------------------------------------------------------------
@@ -193,7 +217,7 @@ end
 ---@param direction? string --horizontal, vertical
 ---@return LuaGuiElement
 function Form:get_frame_panel(panel_name, style, direction)
-    local flow_panel, content_panel, menu_panel = self:get_panel()
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
     if content_panel[panel_name] ~= nil and content_panel[panel_name].valid then
         return content_panel[panel_name]
     end
@@ -215,7 +239,7 @@ end
 ---@param direction? string
 ---@return LuaGuiElement
 function Form:get_flow_panel(panel_name, direction)
-    local flow_panel, content_panel, menu_panel = self:get_panel()
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
     if content_panel[panel_name] ~= nil and content_panel[panel_name].valid then
         return content_panel[panel_name]
     end
@@ -234,7 +258,7 @@ end
 ---@param panel_name string
 ---@return LuaGuiElement
 function Form:get_scroll_panel(panel_name)
-    local flow_panel, content_panel, menu_panel = self:get_panel()
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
     if content_panel[panel_name] ~= nil and content_panel[panel_name].valid then
         return content_panel[panel_name]
     end
@@ -324,7 +348,7 @@ end
 ---<br>Don't use this function! use Form:on_event(event)
 ---@param event EventModData
 function Form:on_event_form(event)
-    local flow_panel, content_panel, menu_panel = self:get_panel()
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
     if event.action == "CLOSE" then
         self:close(event)
     end
@@ -345,7 +369,7 @@ end
 ---@param event EventModData
 function Form:close(event)
     if not (self:is_opened()) then return end
-    local flow_panel, content_panel, menu_panel = self:get_panel()
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
     User.set_form_close(self.classname, flow_panel.location)
     flow_panel.destroy()
     self:on_close(event)
@@ -396,14 +420,17 @@ end
 ---@param event EventModData
 function Form:update(event)
     if not (self:is_opened()) then return end
-    local flow_panel, content_panel, menu_panel = self:get_panel()
-    if self.auto_clear then content_panel.clear() end
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
+    if self.auto_clear then
+        content_panel.clear()
+        if self.submenu_enabled then
+            submenu_panel.clear()
+        end
+    end
     self:update_menu_header(event)
     self:on_update(event)
     self:on_update_extensions(event)
-    if self.anchor == nil then
-        self:update_location(event)
-    end
+    self:update_location(event)
 end
 
 -------------------------------------------------------------------------------
@@ -424,7 +451,7 @@ end
 function Form:update_menu_header(event)
     ---ajoute un menu
     if self.panel_caption ~= nil then
-        local flow_panel, content_panel, menu_panel = self:get_panel()
+        local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
         menu_panel.clear()
         if self.panel_close then
             ---special tab
@@ -461,7 +488,7 @@ end
 function Form:update_location(event)
     local width, height = Player.get_display_sizes()
     local width_main, height_main = User.get_main_sizes()
-    local flow_panel, content_panel, menu_panel = self:get_panel()
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
 
     local location = flow_panel.location
     if location.x < 0 or location.x > (width - 100) then

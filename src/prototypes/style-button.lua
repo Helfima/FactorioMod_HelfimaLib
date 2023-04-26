@@ -63,63 +63,84 @@ local function menuButtonIcons(name, font)
     if default == nil then return {570,570,570,570} end
     return {17 * (default - 1), 17 * (hovered - 1), 17 * (clicked - 1), 386 + 17 * (disabled - 1)}
   end
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), 32, "default", font, font_white, font_black)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), 24, "sm_default", font, font_white, font_black)
+  local size_default=32
+  local size_sm=24
+  local size_tool=28
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), size_default, "default", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), size_sm, "sm_default", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), size_tool, "tool_default", font, font_white, font_black)
 
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), 32, nil, font, font_white, font_black)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), 24, "sm", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), size_default, nil, font, font_white, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), size_sm, "sm", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), size_tool, "tool", font, font_white, font_black)
 
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(2,3,4,1), 32, "selected", font, font_black, font_black)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(2,3,4,1), 24, "sm_selected", font, font_black, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(2,3,4,1), size_default, "selected", font, font_black, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(2,3,4,1), size_sm, "sm_selected", font, font_black, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(2,3,4,1), size_tool, "tool_selected", font, font_black, font_black)
 
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,3,4,1), 32, "dark", font, font_white, font_black)
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,3,4,1), 24, "sm_dark", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,3,4,1), size_default, "dark", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,3,4,1), size_sm, "sm_dark", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,3,4,1), size_tool, "tool_dark", font, font_white, font_black)
 
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(3,3,4,1), 32, "dark_selected", font, font_white, font_black)
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(3,3,4,1), 24, "sm_dark_selected", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(3,3,4,1), size_default, "dark_selected", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(3,3,4,1), size_sm, "sm_dark_selected", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(3,3,4,1), size_tool, "tool_dark_selected", font, font_white, font_black)
 
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), 32, "bold", font_bold, font_black, font_black)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), 24, "sm_bold", font_bold, font_black, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), size_default, "bold", font_bold, font_black, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), size_sm, "sm_bold", font_bold, font_black, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), size_tool, "tool_bold", font_bold, font_black, font_black)
 
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(2,3,4,1), 32, "bold_selected", font_bold, font_white, font_black)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(2,3,4,1), 24, "sm_bold_selected", font_bold, font_white, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(2,3,4,1), size_default, "bold_selected", font_bold, font_white, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(2,3,4,1), size_sm, "sm_bold_selected", font_bold, font_white, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(2,3,4,1), size_tool, "tool_bold_selected", font_bold, font_white, font_black)
 
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,3,4,1), 32, "dark_bold", font_bold, font_white, font_black)
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,3,4,1), 24, "sm_dark_bold", font_bold, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,3,4,1), size_default, "dark_bold", font_bold, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,3,4,1), size_sm, "sm_dark_bold", font_bold, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,3,4,1), size_tool, "tool_dark_bold", font_bold, font_white, font_black)
 
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(3,3,4,1), 32, "dark_bold_selected", font_bold, font_white, font_black)
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(3,3,4,1), 24, "sm_dark_bold_selected", font_bold, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(3,3,4,1), size_default, "dark_bold_selected", font_bold, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(3,3,4,1), size_sm, "sm_dark_bold_selected", font_bold, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(3,3,4,1), size_tool, "tool_dark_bold_selected", font_bold, font_white, font_black)
 
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,9,10,2), 32, "red", font, font_white, font_white)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,9,10,2), 24, "sm_red", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,9,10,2), size_default, "red", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,9,10,2), size_sm, "sm_red", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,9,10,2), size_tool, "tool_red", font, font_white, font_white)
 
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,9,10,2), 32, "dark_red", font, font_white, font_white)
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,9,10,2), 24, "sm_dark_red", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,9,10,2), size_default, "dark_red", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,9,10,2), size_sm, "sm_dark_red", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,9,10,2), size_tool, "tool_dark_red", font, font_white, font_white)
 
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(9,11,10,2), 32, "actived_red", font, font_white, font_white)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(9,11,10,2), 24, "sm_actived_red", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(9,11,10,2), size_default, "actived_red", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(9,11,10,2), size_sm, "sm_actived_red", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(9,11,10,2), size_tool, "tool_actived_red", font, font_white, font_white)
 
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(11,9,10,2), 32, "selected_red", font, font_white, font_white)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(11,9,10,2), 24, "sm_selected_red", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(11,9,10,2), size_default, "selected_red", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(11,9,10,2), size_sm, "sm_selected_red", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(11,9,10,2), size_tool, "tool_selected_red", font, font_white, font_white)
 
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,7,8,3), 32, "green", font, font_white, font_black)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,7,8,3), 24, "sm_green", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,7,8,3), size_default, "green", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,7,8,3), size_sm, "sm_green", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,7,8,3), size_tool, "tool_green", font, font_white, font_black)
 
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,7,8,3), 32, "dark_green", font, font_white, font_black)
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,7,8,3), 24, "sm_dark_green", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,7,8,3), size_default, "dark_green", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,7,8,3), size_sm, "sm_dark_green", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,7,8,3), size_tool, "tool_dark_green", font, font_white, font_black)
 
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(5,7,8,3), 32, "actived_green", font, font_black, font_black)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(5,7,8,3), 24, "sm_actived_green", font, font_black, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(5,7,8,3), size_default, "actived_green", font, font_black, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(5,7,8,3), size_sm, "sm_actived_green", font, font_black, font_black)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(5,7,8,3), size_tool, "tool_actived_green", font, font_black, font_black)
 
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,7,8,3), 32, "selected_green", font, font_white, font_black)
-  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,7,8,3), 24, "sm_selected_green", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,7,8,3), size_default, "selected_green", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,7,8,3), size_sm, "sm_selected_green", font, font_white, font_black)
+  menuButtonIcon(name, icon_row(1,2,2,2), icon_col(1,7,8,3), size_tool, "tool_selected_green", font, font_white, font_black)
 
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), 32, "selected_yellow", font, font_white, font_white)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), 24, "sm_selected_yellow", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), size_default, "selected_yellow", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), size_sm, "sm_selected_yellow", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(1,3,4,1), size_tool, "tool_selected_yellow", font, font_white, font_white)
 
   menuButtonIcon(name, icon_row(2,2,2,2), icon_col(), 36, "flat2", font, font_white, font_white)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(), 32, "flat", font, font_white, font_white)
-  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(), 24, "sm_flat", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(), size_default, "flat", font, font_white, font_white)
+  menuButtonIcon(name, icon_row(2,2,2,2), icon_col(), size_sm, "sm_flat", font, font_white, font_white)
 end
 
 menuButtonIcons("helfima_lib_button_menu")
