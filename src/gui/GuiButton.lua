@@ -67,14 +67,12 @@ end
 ---Set Choose button (choose-elem-button)
 ---@param type string #item, tile, entity, signal, fluid, recipe, decorative, item-group, achievement, equipment, technology
 ---@param name string
----@param key string
 ---@return GuiButton
-function GuiButton:choose(type, name, key)
+function GuiButton:choose(type, name)
     self.options.type = "choose-elem-button"
     if type == nil then return self end
     self.options.elem_type = type
     self.options[type] = name
-    table.insert(self.name, key or name)
     return self
 end
 
