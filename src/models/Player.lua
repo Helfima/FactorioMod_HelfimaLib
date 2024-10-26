@@ -78,9 +78,9 @@ end
 ---@return table
 function Player.get_entity_prototypes(filters)
   if filters ~= nil then
-    return game.get_filtered_entity_prototypes(filters)
+    return prototypes.get_entity_filtered(filters)
   end
-  return game.entity_prototypes
+  return prototypes.entity
 end
 
 -------------------------------------------------------------------------------

@@ -11,17 +11,17 @@ local User = {
   mod_settings = {},
 }
 
----Get user global data
+---Get user storage data
 ---@return table
 function User.get_global()
-  if global["users"] == nil then
-    global["users"] = {}
+  if storage["users"] == nil then
+    storage["users"] = {}
   end
   local user_name = User.name()
-  if global["users"][user_name] == nil then
-    global["users"][user_name] = {}
+  if storage["users"][user_name] == nil then
+    storage["users"][user_name] = {}
   end
-  return global["users"][user_name]
+  return storage["users"][user_name]
 end
 
 -------------------------------------------------------------------------------
@@ -284,13 +284,13 @@ end
 ---Reset global variable for user
 function User.reset()
   local user_name = User.name()
-  global["users"][user_name] = {}
+  storage["users"][user_name] = {}
 end
 
 -------------------------------------------------------------------------------
 ---Reset global variable for all user
 function User.reset_all()
-  global["users"] = {}
+  storage["users"] = {}
 end
 
 -------------------------------------------------------------------------------

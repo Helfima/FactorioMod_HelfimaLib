@@ -1,11 +1,11 @@
 {
   "name": "HelfimaLib",
-  "version": "0.2.8",
+  "version": "2.0.1",
   "title": "Helfima's Library",
   "author": "Helfima",
   "contact": "",
   "homepage": "https://github.com/Helfima/FactorioMod_HelfimaLib",
   "description": "Helfima's Library.",
-  "dependencies": ["base >= 1.1.0"],
-  "factorio_version": "1.1"
+  "dependencies": ["base >= 2.0.7"],
+  "factorio_version": "2.0"
 }

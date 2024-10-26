@@ -149,7 +149,7 @@ function AdminPanel:update_mod()
     self:add_cell_header(table_panel, "version",
         { "", defines.mod.tags.font.default_bold, { "helfima-lib.version" }, defines.mod.tags.font.close })
 
-    for name, version in pairs(game.active_mods) do
+    for name, version in pairs(script.active_mods) do
         GuiElement.add(table_panel, GuiLabel("_name", name):caption(name))
         GuiElement.add(table_panel, GuiLabel("version", name):caption(version))
     end
@@ -181,7 +181,7 @@ function AdminPanel:update_cache()
         end
     end
 
-    local users_data = global["users"]
+    local users_data = storage["users"]
     if table.size(users_data) > 0 then
         local cache_panel = GuiElement.add(table_panel, GuiFlowV("user-caches"))
         GuiElement.add(cache_panel, GuiLabel("translate-label"):caption("User caches"):style("bold_label"))
@@ -469,15 +469,15 @@ function AdminPanel:on_event(event)
 
     if event.action == "delete-cache" then
         Dispatcher:send(defines.mod.events.on_before_delete_cache, event, nil)
-        if event.item1 ~= nil and global[event.item1] ~= nil then
+        if event.item1 ~= nil and storage[event.item1] ~= nil then
             if event.item2 == "" and event.item3 == "" and event.item4 == "" then
-                global[event.item1] = nil
+                storage[event.item1] = nil
             elseif event.item3 == "" and event.item4 == "" then
-                global[event.item1][event.item2] = {}
+                storage[event.item1][event.item2] = {}
             elseif event.item4 == "" then
-                global[event.item1][event.item2][event.item3] = nil
+                storage[event.item1][event.item2][event.item3] = nil
             else
-                global[event.item1][event.item2][event.item3][event.item4] = nil
+                storage[event.item1][event.item2][event.item3][event.item4] = nil
             end
             Player.print("Deleted:", event.item1, event.item2, event.item3, event.item4)
         else
