@@ -3,7 +3,7 @@
 ---@class AdminPanel : Form
 AdminPanel = newclass(Form, function(base, classname)
     Form.init(base, classname)
-    base.inner_frame = defines.mod.styles.frame.inner_tab
+    base.inner_frame = defines.mod.styles.frame.inside_deep
     base.auto_clear = false
     base.mod_menu = false
 end)
@@ -21,8 +21,8 @@ end
 ---@param height_main number
 function AdminPanel:on_style(styles, width_main, height_main)
     styles.flow_panel = {
-        width = 500,
-        height = 400,
+        width = width_main * 0.8,
+        height = height_main * 0.8
     }
 end
 
