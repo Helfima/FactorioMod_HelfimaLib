@@ -356,7 +356,7 @@ function AdminPanel:update_global()
     local scroll_panel = self:get_tab_global()
     local root_branch = GuiElement.add(scroll_panel, GuiFlowV())
     root_branch.style.vertically_stretchable = false
-    self:create_tree(root_branch, { global = global }, true)
+    self:create_tree(root_branch, { storage = storage }, true)
 end
 
 -------------------------------------------------------------------------------
