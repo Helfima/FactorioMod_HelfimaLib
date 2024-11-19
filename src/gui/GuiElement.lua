@@ -5,6 +5,7 @@
 ---@field name table
 ---@field is_caption boolean
 ---@field options table
+---@field post_action table
 GuiElement = newclass(function(base,...)
   base.name = {...}
   base.classname = "HMGuiElement"
@@ -162,7 +163,9 @@ function GuiElement.add(parent, gui_element)
   local element = nil
   local ok , err = pcall(function()
     if gui_element.classname ~= "HLGuiCell" then
-      element = parent.add(gui_element:getOptions())
+      local options = gui_element:getOptions()
+      element = parent.add(options)
+      GuiElement.addPostAction(element, gui_element)
     else
       element = gui_element:create(parent)
     end
@@ -173,6 +176,24 @@ function GuiElement.add(parent, gui_element)
     log(debug.traceback())
   end
   return element
+end
+
+-------------------------------------------------------------------------------
+---Add a post action on element
+---@param parent LuaGuiElement --container for element
+---@param gui_element GuiElement
+function GuiElement.addPostAction(parent, gui_element)
+  if gui_element.post_action == nil then return end
+  for action_name, action in pairs(gui_element.post_action) do
+    if action_name == "mask_quality" then
+      GuiElement.maskQuality(parent, action.quality, action.size)
+    end
+    if action_name == "apply_elem_value" then
+      if action ~= nil and action.name ~= nil then
+        parent.elem_value = action
+      end
+    end
+  end
 end
 
 -------------------------------------------------------------------------------
@@ -221,4 +242,34 @@ function GuiElement.find_element(element, search)
       end
     end
   end
+end
+
+-------------------------------------------------------------------------------
+---Add quality mmask
+---@param parent LuaGuiElement
+---@param quality string
+---@param size number?
+function GuiElement.maskQuality(parent, quality, size)
+  if quality == nil or quality == "normal" then
+    return
+  end
+  local sprite_name = GuiElement.getSprite("quality", quality)
+  local container = GuiElement.add(parent, GuiFlow("quality-info"))
+  local style_name = parent.style.name
+  local mask_frame = GuiElement.add(container, GuiSprite("quality-info"):sprite(sprite_name))
+  if string.find(style_name, "_sm") then
+    container.style.top_padding = 8
+    mask_frame.style.width = size or 8
+    mask_frame.style.height = size or 8
+  elseif string.find(style_name, "_m") then
+    container.style.top_padding = 12
+    mask_frame.style.width = size or 10
+    mask_frame.style.height = size or 10
+  else
+    container.style.top_padding = 20
+    mask_frame.style.width = size or 12
+    mask_frame.style.height = size or 12
+  end
+  mask_frame.style.stretch_image_to_widget_size = true
+  mask_frame.ignored_by_interaction = true
 end

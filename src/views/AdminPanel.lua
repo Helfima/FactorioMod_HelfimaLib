@@ -392,29 +392,20 @@ function AdminPanel:create_tree(parent, list, expand)
         hbar.style.right_margin = 5
         if info.type == "table" then
             if index >= 25 then
-                local caption = { "", defines.mod.tags.font.default_bold, defines.mod.tags.color.green_light,
-                    "... (expand)",
-                    defines.mod.tags.color.close, defines.mod.tags.font.close }
-                local label = GuiElement.add(header,
-                    GuiLabel(self.classname, "global-continue", "bypass"):caption(caption))
-                label.tags = table.slice(list, 25)
+                local caption = { "", defines.mod.tags.font.default_bold, defines.mod.tags.color.green_light, "... (expand)", defines.mod.tags.color.close, defines.mod.tags.font.close }
+                local label = GuiElement.add(header, GuiLabel(self.classname, "global-continue", "bypass"):caption(caption))
+                label.tags = {list=table.slice(list, 25)}
             else
-                local caption = { "", defines.mod.tags.font.default_bold, defines.mod.tags.color.green_light, k,
-                    defines.mod.tags.color.close, defines.mod.tags.font.close, " [", table.size(info.value), "]", " (",
-                    info.type, ")" }
+                local caption = { "", defines.mod.tags.font.default_bold, defines.mod.tags.color.green_light, k, defines.mod.tags.color.close, defines.mod.tags.font.close, " [", table.size(info.value), "]", " (", info.type, ")" }
                 if expand then
                     GuiElement.add(header, GuiLabel("global-end"):caption(caption))
                 else
-                    local label = GuiElement.add(header,
-                        GuiLabel(self.classname, "global-update", "bypass"):caption(caption))
+                    local label = GuiElement.add(header, GuiLabel(self.classname, "global-update", "bypass"):caption(caption))
                     label.tags = info
                 end
             end
         else
-            local caption = { "", defines.mod.tags.font.default_bold, defines.mod.tags.color.gold, k,
-                defines.mod.tags.color.close, defines.mod.tags.font.close, "=", defines.mod.tags.font.default_bold,
-                info.value,
-                defines.mod.tags.font.close, " (", info.type, ")" }
+            local caption = { "", defines.mod.tags.font.default_bold, defines.mod.tags.color.gold, k, defines.mod.tags.color.close, defines.mod.tags.font.close, "=", defines.mod.tags.font.default_bold, info.value, defines.mod.tags.font.close, " (", info.type, ")" }
             local label = GuiElement.add(header, GuiLabel("global-end"):caption(caption))
         end
         -- next
@@ -462,7 +453,7 @@ function AdminPanel:on_event(event)
         local element = event.element
         local content = element.parent.parent
         local parent_next = content.parent.parent
-        local list = element.tags
+        local list = element.tags.list
         content.parent.destroy()
         self:create_tree(parent_next, list)
     end

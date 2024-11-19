@@ -20,6 +20,30 @@ function border_image_set()
   }
 end
 
+function border_image_set_uniform(position)
+  local size = 2
+  local width = 2
+  return
+  {
+    border_width = width,
+    vertical_line = {position = position, size = {size, 1}},
+    horizontal_line = {position = position, size = {1, size}},
+    top_right_corner = {position = position, size = {size, size}},
+    bottom_right_corner = {position = position, size = {size, size}},
+    bottom_left_corner = {position = position, size = {size, size}},
+    top_left_coner = {position = position, size = {size, size}},
+    top_t = {position = position, size = {size, size}},
+    right_t = {position = position, size = {size, size}},
+    bottom_t = {position = position, size = {size, size}},
+    left_t = {position = position, size = {size, size}},
+    cross = {position = position, size = {size, size}},
+    top_end = {position = position, size = {size, size}},
+    right_end = {position = position, size = {size, size}},
+    bottom_end = {position = position, size = {size, size}},
+    left_end = {position = position, size = {size, size}},
+  }
+end
+
 local default_gui = data.raw["gui-style"].default
 
 default_gui["helfima_lib_table_default"] = {
@@ -38,4 +62,40 @@ default_gui["helfima_lib_table_border"] = {
   type = "table_style",
   parent = "helfima_lib_table_default",
   border = border_image_set(),
+}
+
+default_gui["helfima_lib_table_border_white"] = {
+  type = "table_style",
+  parent = "helfima_lib_table_default",
+  border = border_image_set_uniform({200, 80}),
+}
+
+default_gui["helfima_lib_table_border_gray"] = {
+  type = "table_style",
+  parent = "helfima_lib_table_default",
+  border = border_image_set_uniform({8, 24}),
+}
+
+default_gui["helfima_lib_table_border_yellow"] = {
+  type = "table_style",
+  parent = "helfima_lib_table_default",
+  border = border_image_set_uniform({40, 24}),
+}
+
+default_gui["helfima_lib_table_border_green"] = {
+  type = "table_style",
+  parent = "helfima_lib_table_default",
+  border = border_image_set_uniform({76, 24}),
+}
+
+default_gui["helfima_lib_table_border_red"] = {
+  type = "table_style",
+  parent = "helfima_lib_table_default",
+  border = border_image_set_uniform({144, 24}),
+}
+
+default_gui["helfima_lib_table_border_blue"] = {
+  type = "table_style",
+  parent = "helfima_lib_table_default",
+  border = border_image_set_uniform({335, 55}),
 }

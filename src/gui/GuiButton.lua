@@ -35,6 +35,35 @@ function GuiButton:sprite(type, name, hovered)
 end
 
 -------------------------------------------------------------------------------
+---Set Sprite
+---@param element_type string
+---@param element_name string
+---@param element_quality string
+---@param hovered string
+---@return GuiButton
+function GuiButton:sprite_with_quality(element_type, element_name, element_quality, hovered)
+    self.options.type = "sprite-button"
+    self.options.tags = { type = element_type, name = element_name, quality = element_quality }
+    self.is_caption = false
+    if element_type == "energy" and defines.sprite_tooltips[element_name] ~= nil then
+        self.options.sprite = GuiElement.getSprite(defines.sprite_tooltips[element_name])
+        if hovered then
+            self.options.hovered_sprite = GuiElement.getSprite(hovered)
+        end
+    else
+        self.options.sprite = GuiElement.getSprite(element_type, element_name)
+        if hovered then
+            self.options.hovered_sprite = GuiElement.getSprite(element_type, hovered)
+        end
+    end
+    table.insert(self.name, element_name)
+    if element_quality ~= nil then
+        self.post_action["mask_quality"] = {quality=element_quality, size=self.mask_quality_size}
+    end
+    return self
+end
+
+-------------------------------------------------------------------------------
 ---Set option
 ---@param name string
 ---@param value any
@@ -73,6 +102,27 @@ function GuiButton:choose(type, name)
     if type == nil then return self end
     self.options.elem_type = type
     self.options[type] = name
+    return self
+end
+
+-------------------------------------------------------------------------------
+---Set Choose button style
+---@param element_type string
+---@param element_name string
+---@param element_quality string
+---@return GuiButton
+function GuiButton:choose_with_quality(element_type, element_name, element_quality)
+    self.options.type = "choose-elem-button"
+    self.options.tags = { type = element_type, name = element_name, quality = element_quality }
+    if element_type == "signal" then
+        self.options.elem_type = element_type
+    else 
+        self.options.elem_type = string.format("%s-with-quality", element_type)
+    end
+    self.post_action["apply_elem_value"] = { name = element_name, quality = element_quality or "normal" }
+    if element_name ~= nil then
+        table.insert(self.name, element_name)
+    end
     return self
 end
 

@@ -55,6 +55,16 @@ defines.mod.styles.flow.default = "helfima_lib_flow_default"
 defines.mod.styles.flow.horizontal = "helfima_lib_flow_horizontal"
 defines.mod.styles.flow.vertical = "helfima_lib_flow_vertical"
 
+defines.mod.styles.table = {}
+defines.mod.styles.table.default="helfima_lib_table_default"
+defines.mod.styles.table.bordered="helfima_lib_table_border"
+defines.mod.styles.table.bordered_white="helfima_lib_table_border_white"
+defines.mod.styles.table.bordered_gray="helfima_lib_table_border_gray"
+defines.mod.styles.table.bordered_green="helfima_lib_table_border_green"
+defines.mod.styles.table.bordered_yellow="helfima_lib_table_border_yellow"
+defines.mod.styles.table.bordered_red="helfima_lib_table_border_red"
+defines.mod.styles.table.bordered_blue="helfima_lib_table_border_blue"
+
 defines.mod.styles.button = {}
 defines.mod.styles.button.menu_default = "helfima_lib_button_menu_default"
 defines.mod.styles.button.menu_sm_default = "helfima_lib_button_menu_sm_default"
