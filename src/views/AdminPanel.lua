@@ -51,28 +51,28 @@ end
 ---Get or create cache tab panel
 ---@return LuaGuiElement
 function AdminPanel:get_tab_cache()
-    return self:get_tab("cache-tab-panel", { "helfima-lib.cache-list" })
+    return self:get_tab_scroll("cache-tab-panel", { "helfima-lib.cache-list" })
 end
 
 -------------------------------------------------------------------------------
 ---Get or create mods tab panel
 ---@return LuaGuiElement
 function AdminPanel:get_tab_mod()
-    return self:get_tab("mod-tab-panel", { "helfima-lib.mod-list" })
+    return self:get_tab_scroll("mod-tab-panel", { "helfima-lib.mod-list" })
 end
 
 -------------------------------------------------------------------------------
 ---Get or create gui tab panel
 ---@return LuaGuiElement
 function AdminPanel:get_tab_gui()
-    return self:get_tab("gui-tab-panel", { "helfima-lib.gui-list" })
+    return self:get_tab_scroll("gui-tab-panel", { "helfima-lib.gui-list" })
 end
 
 -------------------------------------------------------------------------------
 ---Get or create global tab panel
 ---@return LuaGuiElement
 function AdminPanel:get_tab_global()
-    return self:get_tab("global-tab-panel", "Global")
+    return self:get_tab_scroll("global-tab-panel", "Global")
 end
 
 -------------------------------------------------------------------------------

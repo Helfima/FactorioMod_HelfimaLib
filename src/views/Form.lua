@@ -280,6 +280,9 @@ end
 ---Get or create tab panel
 ---@return LuaGuiElement
 function Form:get_tab_pane()
+    local flow_panel, content_panel, submenu_panel, menu_panel = self:get_panel()
+    content_panel.style.padding = 0
+    
     local content_panel = self:get_flow_panel("panel", "vertical")
     local panel_name = "tab_panel"
     local name = table.concat({ self.classname, "change-tab", panel_name }, "=")
@@ -287,6 +290,11 @@ function Form:get_tab_pane()
         return content_panel[name]
     end
     local panel = GuiElement.add(content_panel, GuiTabPane(self.classname, "change-tab", panel_name))
+    panel.style.margin = 0
+    panel.style.top_padding = 10
+    panel.style.right_padding = 0
+    panel.style.left_padding = 0
+    panel.style.bottom_padding = 0
     return panel
 end
 
@@ -297,6 +305,26 @@ end
 ---@return LuaGuiElement
 function Form:get_tab(panel_name, caption)
     local content_panel = self:get_tab_pane()
+    local flow_name = "scroll-" .. panel_name
+    if content_panel[panel_name] ~= nil and content_panel[panel_name].valid then
+        return content_panel[flow_name]
+    end
+    local tab_panel = GuiElement.add(content_panel, GuiTab(panel_name):caption(caption))
+    local flow_panel = GuiElement.add(content_panel, GuiFlowV(flow_name))
+    content_panel.add_tab(tab_panel, flow_panel)
+    flow_panel.style.horizontally_stretchable = true
+    flow_panel.style.vertically_stretchable = true
+    flow_panel.style.margin = 10
+    return flow_panel
+end
+
+-------------------------------------------------------------------------------
+---Get or create tab panel
+---@param panel_name string
+---@param caption string|table
+---@return LuaGuiElement
+function Form:get_tab_scroll(panel_name, caption)
+    local content_panel = self:get_tab_pane()
     local scroll_name = "scroll-" .. panel_name
     if content_panel[panel_name] ~= nil and content_panel[panel_name].valid then
         return content_panel[scroll_name]
@@ -306,6 +334,7 @@ function Form:get_tab(panel_name, caption)
     content_panel.add_tab(tab_panel, scroll_panel)
     scroll_panel.style.horizontally_stretchable = true
     scroll_panel.style.vertically_stretchable = true
+    scroll_panel.style.margin = 10
     return scroll_panel
 end
 
