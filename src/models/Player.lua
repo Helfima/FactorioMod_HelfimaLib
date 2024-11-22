@@ -110,8 +110,7 @@ end
 ---@param sprite_path string
 ---@return boolean
 function Player.is_valid_sprite_path(sprite_path)
-  if Lua_player == nil then return false end
-  return Lua_player.gui.is_valid_sprite_path(sprite_path)
+  return helpers.is_valid_sprite_path(sprite_path)
 end
 
 -------------------------------------------------------------------------------

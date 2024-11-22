@@ -102,6 +102,7 @@ function GuiButton:choose(type, name)
     if type == nil then return self end
     self.options.elem_type = type
     self.options[type] = name
+    table.insert(self.name, name)
     return self
 end
 

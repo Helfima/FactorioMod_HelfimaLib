@@ -30,5 +30,7 @@ require "__HelfimaLib__.controllers.Dispatcher"
 require "__HelfimaLib__.views.Form"
 require "__HelfimaLib__.views.FormRelative"
 require "__HelfimaLib__.views.AdminPanel"
+require "__HelfimaLib__.views.Selector"
 
 Form.views["HLAdmin"] = AdminPanel("HLAdmin")
+Form.views["HLSelector"] = Selector("HLSelector")

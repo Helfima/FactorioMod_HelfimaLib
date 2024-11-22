@@ -172,6 +172,7 @@ function GuiElement.add(parent, gui_element)
   end)
   if not ok then
     element = parent.add(gui_element:onErrorOptions())
+    element.tooltip = err
     log(err)
     log(debug.traceback())
   end

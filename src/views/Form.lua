@@ -137,12 +137,11 @@ end
 ---Set style
 ---@param flow_panel LuaGuiElement
 function Form:set_style_flow(flow_panel)
-    self:set_style(flow_panel, "flow_panel", "width")
-    self:set_style(flow_panel, "flow_panel", "height")
-    self:set_style(flow_panel, "flow_panel", "minimal_width")
-    self:set_style(flow_panel, "flow_panel", "minimal_height")
-    self:set_style(flow_panel, "flow_panel", "maximal_width")
-    self:set_style(flow_panel, "flow_panel", "maximal_height")
+    if self.styles == nil or self.styles["flow_panel"] == nil then return end
+    local styles = self.styles["flow_panel"]
+    for style_name, value in pairs(styles) do
+        self:set_style(flow_panel, "flow_panel", style_name)
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -165,7 +164,7 @@ function Form:get_panel()
     ---main panel
     ---@type GuiFrame
     local main_frame = GuiFrameV(panel_name):style(defines.mod.styles.frame.inner_outer)
-    
+
     local flow_panel = GuiElement.add(parent_panel, main_frame)
     flow_panel.style.horizontally_stretchable = true
     flow_panel.style.vertically_stretchable = true
