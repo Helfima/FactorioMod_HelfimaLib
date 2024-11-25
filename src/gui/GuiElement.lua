@@ -11,6 +11,7 @@ GuiElement = newclass(function(base,...)
   base.classname = "HMGuiElement"
   base.options = {}
   base.is_caption = true
+  base.post_action = {}
 end)
 GuiElement.classname = "HMGuiElement"
 GuiElement.color_button_default = "gray"
@@ -27,6 +28,18 @@ GuiElement.color_button_rest = "red"
 function GuiElement:style(...)
   if ... ~= nil then
     self.options.style = table.concat({...},"_")
+  end
+  return self
+end
+
+-------------------------------------------------------------------------------
+---Set style
+---@param width number
+---@param height? number
+---@return GuiElement
+function GuiElement:size(width, height)
+  if width ~= nil then
+    self.post_action["apply_size"] = {width = width, height = height}
   end
   return self
 end
@@ -165,7 +178,7 @@ function GuiElement.add(parent, gui_element)
     if gui_element.classname ~= "HLGuiCell" then
       local options = gui_element:getOptions()
       element = parent.add(options)
-      GuiElement.addPostAction(element, gui_element)
+      GuiElement.add_post_action(element, gui_element)
     else
       element = gui_element:create(parent)
     end
@@ -183,15 +196,31 @@ end
 ---Add a post action on element
 ---@param parent LuaGuiElement --container for element
 ---@param gui_element GuiElement
-function GuiElement.addPostAction(parent, gui_element)
+function GuiElement.add_post_action(parent, gui_element)
   if gui_element.post_action == nil then return end
   for action_name, action in pairs(gui_element.post_action) do
     if action_name == "mask_quality" then
-      GuiElement.maskQuality(parent, action.quality, action.size)
+      GuiElement.mask_quality(parent, action.quality, action.size)
     end
     if action_name == "apply_elem_value" then
       if action ~= nil and action.name ~= nil then
         parent.elem_value = action
+      end
+    end
+    if action_name == "apply_size" then
+      if action ~= nil and action.width ~= nil then
+        parent.style.width = action.width
+        if action.height ~= nil then
+          parent.style.height = action.height
+        end
+        parent.style.stretch_image_to_widget_size = true
+      end
+    end
+    if action_name == "apply_style" then
+      if action ~= nil then
+        for key, value in pairs(action) do
+          parent.style[key] = value
+        end
       end
     end
   end
@@ -214,7 +243,7 @@ end
 ---Get dropdown selection
 ---@param element LuaGuiElement
 ---@return string|table|nil
-function GuiElement.getDropdownSelection(element)
+function GuiElement.get_dropdown_selection(element)
   if element.selected_index == 0 then return nil end
   if #element.items == 0 then return nil end
   return element.items[element.selected_index]
@@ -224,7 +253,7 @@ end
 ---Set the text of textfield input
 ---@param element LuaGuiElement
 ---@param value string
-function GuiElement.setInputText(element, value)
+function GuiElement.set_input_text(element, value)
   if element ~= nil and element.text ~= nil then
     element.text = value
   end
@@ -250,7 +279,7 @@ end
 ---@param parent LuaGuiElement
 ---@param quality string
 ---@param size number?
-function GuiElement.maskQuality(parent, quality, size)
+function GuiElement.mask_quality(parent, quality, size)
   if quality == nil or quality == "normal" then
     return
   end
@@ -273,4 +302,12 @@ function GuiElement.maskQuality(parent, quality, size)
   end
   mask_frame.style.stretch_image_to_widget_size = true
   mask_frame.ignored_by_interaction = true
+end
+
+-------------------------------------------------------------------------------
+---Add tags
+---@param data table
+function GuiElement:tags(data)
+  self.options["tags"] = data
+  return self
 end

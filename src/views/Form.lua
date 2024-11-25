@@ -163,7 +163,7 @@ function Form:get_panel()
     end
     ---main panel
     ---@type GuiFrame
-    local main_frame = GuiFrameV(panel_name):style(defines.mod.styles.frame.inner_outer)
+    local main_frame = GuiFrameV(panel_name):style(defines.mod.styles.frame.default)
 
     local flow_panel = GuiElement.add(parent_panel, main_frame)
     flow_panel.style.horizontally_stretchable = true

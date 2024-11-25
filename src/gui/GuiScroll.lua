@@ -5,7 +5,7 @@ GuiScroll = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
   base.classname = "HLGuiScroll"
   base.options.type = "scroll-pane"
-  base.options.style = "inner_frame_scroll_pane"
+  base.options.style = defines.mod.styles.scroll.default
 end)
 
 -------------------------------------------------------------------------------

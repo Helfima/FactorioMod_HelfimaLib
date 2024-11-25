@@ -263,3 +263,28 @@ function GuiButtonSelectSpriteXxl:color(color)
     self.options.style = style
     return self
 end
+
+-------------------------------------------------------------------------------
+---@class GuiLink : GuiButton
+GuiLink = newclass(GuiButton, function(base, ...)
+    GuiButton.init(base, ...)
+    base.options.style = defines.mod.styles.button.link
+    local style = {
+        font_color = defines.color.orange.orange,
+        hovered_font_color = defines.color.gray.silver
+    }
+    base.post_action["apply_style"] = style
+end)
+
+-------------------------------------------------------------------------------
+---Set color
+---@param font_color table
+---@param hovered_font_color? table
+---@return GuiLink
+function GuiLink:font_color(font_color, hovered_font_color)
+    self.post_action["apply_style"].font_color = font_color
+    if hovered_font_color ~= nil then
+        self.post_action["apply_style"].hovered_font_color = hovered_font_color
+    end
+    return self
+  end

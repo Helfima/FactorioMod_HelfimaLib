@@ -5,6 +5,7 @@ require "__HelfimaLib__.core.Object"
 require "__HelfimaLib__.core.tableExtends"
 require "__HelfimaLib__.core.util"
 require "__HelfimaLib__.core.defines"
+require "__HelfimaLib__.core.defines_colors"
 require "__HelfimaLib__.core.defines_builded"
 require "__HelfimaLib__.gui.Gui"
 

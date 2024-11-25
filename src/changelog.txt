@@ -1,6 +1,9 @@
 ---------------------------------------------------------------------------------------------------
 Version: 2.0.2
-Date: 2024-11-11
+Date: 2024-11-26
+  Features:
+    - Added GuiLink and font colors
+    - Added post action on GuiElement
   Changes:
     - Modified style of admin panel
   Bugfixes:

@@ -6,6 +6,8 @@ local Player = {
   classname = "HLPlayer"
 }
 
+
+---@type LuaPlayer
 local Lua_player = nil
 
 -------------------------------------------------------------------------------

@@ -507,3 +507,43 @@ default_gui["helmod_sort_checkbox_bold"] = {
   parent = "helmod_sort_checkbox",
   font = "default-bold"
 }
+
+gui_color =
+{
+    white = { 1, 1, 1 },
+    white_with_alpha = { 1, 1, 1, 0.5 },
+    grey = { 0.5, 0.5, 0.5 },
+    green = { 0, 1, 0 },
+    red = { 255, 142, 142 },
+    orange = { 0.98, 0.66, 0.22 },
+    light_orange = { 1, 0.74, 0.40 },
+    caption = { 255, 230, 192 },
+    achievement_green = { 210, 253, 145 },
+    achievement_tan = { 255, 230, 192 },
+    achievement_failed = { 176, 171, 171 },
+    achievement_failed_body = { 255, 136, 136 },
+    blue = { 128, 206, 240 }
+}
+
+default_gui["helfima_lib_link"] = {
+  type = "button_style",
+  parent = "helfima_lib_button_default",
+  horizontal_align = "left",
+  font = "default-bold",
+  height = 19,
+  padding = 1,
+  margin = 1,
+  default_font_color = gui_color.light_orange,
+  hovered_font_color = gui_color.grey,
+  default_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=0,y=150}, {top=0,right=0,bottom=0,left=0}, true),
+  hovered_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=0,y=150}, {top=0,right=0,bottom=0,left=0}, true),
+  clicked_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=0,y=150}, {top=0,right=0,bottom=0,left=0}, true),
+  
+}
+
+default_gui["helfima_lib_link2"] = {
+  type = "button_style",
+  parent = "helfima_lib_link",
+  default_font_color = gui_color.orange,
+  hovered_font_color = gui_color.grey,
+}
