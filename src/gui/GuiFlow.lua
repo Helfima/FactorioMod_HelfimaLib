@@ -5,7 +5,7 @@ GuiFlow = newclass(GuiElement, function(base, ...)
   GuiElement.init(base, ...)
   base.classname = "HLGuiFlow"
   base.options.type = "flow"
-  base.options.style = "helfima_lib_flow_default"
+  base.options.style = defines.mod.styles.flow.default
 end)
 
 -------------------------------------------------------------------------------

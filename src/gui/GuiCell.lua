@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------
 ---Class to help to build GuiSlider
----@class GuiCell
+---@class GuiCell : GuiElement
 GuiCell = newclass(GuiElement,function(base,...)
   GuiElement.init(base,...)
   base.classname = "HLGuiCell"

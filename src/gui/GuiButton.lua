@@ -287,4 +287,4 @@ function GuiLink:font_color(font_color, hovered_font_color)
         self.post_action["apply_style"].hovered_font_color = hovered_font_color
     end
     return self
-  end
+end

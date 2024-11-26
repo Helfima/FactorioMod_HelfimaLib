@@ -3,9 +3,11 @@
 ---
 ---@class Dispatcher : Object
 ---@field handlers {[string]:{[string]:{class:Object, handlers:{[uint]:function}}}}
+---@field views table
 local module = newclass(Object, function(base, classname)
     Object.init(base, classname)
     base.handlers = {}
+    base.views = {}
 end)
 
 -------------------------------------------------------------------------------
@@ -25,7 +27,7 @@ end
 ---Unbind
 ---@param event_type string
 ---@param class Object
----@param class_handler function
+---@param class_handler? function
 function module:unbind(event_type, class, class_handler)
     if class == nil and class_handler == nil then
         self.handlers[event_type] = nil
@@ -73,8 +75,7 @@ end
 
 ---@param event EventModData
 function module:on_gui_action(event)
-    event.classname, event.action, event.item1, event.item2, event.item3, event.item4 = string.match(event.element.name,
-        defines.mod.events.pattern)
+    event.classname, event.action, event.item1, event.item2, event.item3, event.item4 = string.match(event.element.name, defines.mod.events.pattern)
     if Form.views[event.classname] then
         if event.action == "CLOSE" then
             self:send(defines.mod.events.on_gui_close, event, event.classname)
@@ -96,6 +97,9 @@ function module:on_gui_action(event)
         end
     end
     if FormRelative.views[event.classname] then
+        self:send(defines.mod.events.on_gui_event, event, event.classname)
+    end
+    if self.views[event.classname] then
         self:send(defines.mod.events.on_gui_event, event, event.classname)
     end
 end

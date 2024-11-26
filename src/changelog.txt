@@ -4,6 +4,7 @@ Date: 2024-11-26
   Features:
     - Added GuiLink and font colors
     - Added post action on GuiElement
+    - Added GuiTree
   Changes:
     - Modified style of admin panel
   Bugfixes:
