@@ -109,7 +109,11 @@ defines.mod.styles.frame.colored.none7 = "helfima_lib_frame_colored_none_7"
 
 defines.mod.styles.label = {}
 defines.mod.styles.label.frame_title = "frame_title"
+defines.mod.styles.label.frame_subheading = "frame_subheading_label"
+defines.mod.styles.label.subheader = "subheader_label"
 defines.mod.styles.label.heading_2 = "heading_2_label"
+defines.mod.styles.label.bold_grey ="bold_grey_label"
+defines.mod.styles.label.bold = "bold_label"
 
 defines.mod.styles.flow = {}
 defines.mod.styles.flow.default = "helfima_lib_flow_default"

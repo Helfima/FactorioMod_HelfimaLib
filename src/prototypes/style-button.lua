@@ -530,6 +530,7 @@ default_gui["helfima_lib_link"] = {
   parent = "helfima_lib_button_default",
   horizontal_align = "left",
   font = "default-bold",
+  minimal_width = 0,
   height = 19,
   padding = 1,
   margin = 1,
