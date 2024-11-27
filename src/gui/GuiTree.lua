@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 ---Class to help to build GuiButton
 ---@class GuiTree : GuiCell
+---@field font_link table
 GuiTree = newclass(GuiCell, function(base, ...)
     GuiCell.init(base, ...)
     base.font_link = {}
@@ -95,10 +96,6 @@ function GuiTree:create(parent)
     return self
 end
 
-local color_name = "blue"
-local color_index = 1
-local bar_thickness = 2
-
 -------------------------------------------------------------------------------
 ---Create Tree
 ---@param parent LuaGuiElement
@@ -108,56 +105,66 @@ function GuiTree:create_tree(parent, list, expand)
     local data_info = table.data_info(list)
     local index = 1
     local size = table.size(list)
-    for k, info in pairs(data_info) do
+    for info_key, info in pairs(data_info) do
         local tree_branch = GuiElement.add(parent, GuiFlowH())
         -- vertical bar
-        local vbar = GuiElement.add(tree_branch, GuiFrameV("vbar"):style("helfima_lib_frame_colored", color_name, color_index))
-        vbar.style.width = bar_thickness
-        vbar.style.left_margin = 15
-        if index == size then
-            vbar.style.height = 12
+        local tree_control = GuiElement.add(tree_branch, GuiFlowV("control"))
+        tree_control.style.width = 25
+        tree_control.style.margin = 0
+        tree_control.style.padding = 0
+
+        if index == size or index > 25 then
+            -- end vertical bar
+            local tree_action = GuiElement.add(tree_control, GuiSprite("action"):sprite("menu", defines.sprites.branch_end.blue))
+            tree_action.resize_to_sprite = false
+            tree_action.style.width = 25
+            tree_action.style.height = 25
         else
-            vbar.style.vertically_stretchable = true
-            vbar.style.bottom_margin = 0
+            -- intersect vertical
+            local tree_action = GuiElement.add(tree_control, GuiSprite("action"):sprite("menu", defines.sprites.branch.blue))
+            tree_action.resize_to_sprite = false
+            tree_action.style.width = 25
+            tree_action.style.height = 25
+            -- continious vertical
+            local tree_action = GuiElement.add(tree_control, GuiSprite("next"):sprite("menu", defines.sprites.branch_next.blue))
+            tree_action.resize_to_sprite = false
+            tree_action.style.width = 25
+            tree_action.style.vertically_stretchable = true
         end
         -- content
-        local content = GuiElement.add(tree_branch, GuiFlowV("content"))
+        local content_branch = GuiElement.add(tree_branch, GuiFlowV("content"))
         -- header
-        local header = GuiElement.add(content, GuiFlowH("header"))
-        local hbar = GuiElement.add(header, GuiFrameV("hbar"):style("helfima_lib_frame_colored", color_name, color_index))
-        hbar.style.width = 5
-        hbar.style.height = bar_thickness
-        hbar.style.top_margin = 10
-        hbar.style.right_margin = 5
+        local header = GuiElement.add(content_branch, GuiFlowH("header"))
         if info.type == "table" then
-            if index >= 25 then
-                local caption = { "", defines.mod.tags.font.default_bold, defines.mod.tags.color.green_light, "... (expand)", defines.mod.tags.color.close, defines.mod.tags.font.close }
-                local label = GuiElement.add(header, GuiLabel(self.classname, "expand-continue", "bypass"):caption(caption))
+            if index > 25 then
+                local caption = "More..."
+                local label = GuiElement.add(header, GuiLink(self.classname, "expand-continue", "bypass"):caption(caption):font_color(self.font_link.font_color, self.font_link.hovered_font_color))
                 label.tags = {list=table.slice(list, 25)}
             else
-                local caption = { "", defines.mod.tags.font.default_bold, defines.mod.tags.color.green_light, k, defines.mod.tags.color.close, defines.mod.tags.font.close, " [", table.size(info.value), "]", " (", info.type, ")" }
-                if expand then
-                    GuiElement.add(header, GuiLabel("global-end"):caption(caption))
+                local caption = { "", "[", table.size(info.value), "]", " (", info.type, ")" }
+                if table_size(info.value) == 0 then
+                    GuiElement.add(header, GuiLabel("table-empty"):tags(info):caption(info_key):font_color(defines.color.gray.silver))
+                    GuiElement.add(header, GuiLabel("table-info"):caption(caption))
                 else
-                    local label = GuiElement.add(header, GuiLabel(self.classname, "expand-branch", "bypass"):caption(caption))
-                    label.tags = info
+                    GuiElement.add(header, GuiLink(self.classname, "expand-branch", "bypass"):tags(info):caption(info_key):font_color(defines.color.green.lime_green))
+                    GuiElement.add(header, GuiLabel(self.classname, "expand-branch", "bypass", "table-info"):tags(info):caption(caption))
                 end
             end
         else
-            local caption = { "", defines.mod.tags.font.default_bold, defines.mod.tags.color.gold, k, defines.mod.tags.color.close, defines.mod.tags.font.close, "=", defines.mod.tags.font.default_bold, info.value, defines.mod.tags.font.close, " (", info.type, ")" }
-            local label = GuiElement.add(header, GuiLabel("global-end"):caption(caption))
+            local caption = { "", defines.mod.tags.font.default_bold, defines.mod.tags.color.gold, info_key, defines.mod.tags.color.close, defines.mod.tags.font.close, "=", defines.mod.tags.font.default_bold, info.value, defines.mod.tags.font.close, " (", info.type, ")" }
+            GuiElement.add(header, GuiLabel("global-end"):caption(caption))
         end
         -- next
-        local next = GuiElement.add(content, GuiFlowV("next"))
+        local next = GuiElement.add(content_branch, GuiFlowV("next"))
 
         if expand and info.type == "table" then
             self:create_tree(next, info.value, false)
         else
             next.visible = false
         end
-        index = index + 1
         if index > 25 then
             break
         end
+        index = index + 1
     end
 end

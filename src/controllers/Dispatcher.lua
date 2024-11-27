@@ -119,11 +119,11 @@ function module:on_gui_reset(event)
 end
 
 ---@param event EventData.on_console_command
-function module:on_command(event)
-    if event.parameters == defines.mod.command.action.menu then
+function module.on_command(event)
+    if event.parameter == defines.mod.command.action.menu then
         Dispatcher:send(defines.mod.events.on_gui_mod_menu, event)
     end
-    if event.parameters == defines.mod.command.action.reset_ui then
+    if event.parameter == defines.mod.command.action.reset_ui then
         Dispatcher:send(defines.mod.events.on_gui_reset, event, Dispatcher.classname)
     end
 end
@@ -146,6 +146,16 @@ function module.on_configuration_changed(data)
             Player.set(player)
             Dispatcher:send(defines.mod.events.on_gui_mod_menu, data)
         end
+    end
+end
+
+---Start command
+---@param command_name any
+---@param command_help any
+function module:start_command(command_name, command_help)
+    -- start commands
+    if command_name ~= nil and command_help ~= nil then
+        commands.add_command(command_name, command_help, module.on_command)
     end
 end
 
