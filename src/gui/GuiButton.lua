@@ -94,15 +94,19 @@ end
 
 -------------------------------------------------------------------------------
 ---Set Choose button (choose-elem-button)
----@param type string #item, tile, entity, signal, fluid, recipe, decorative, item-group, achievement, equipment, technology
----@param name string
+---@param element_type string #item, tile, entity, signal, fluid, recipe, decorative, item-group, achievement, equipment, technology
+---@param element_name string
 ---@return GuiButton
-function GuiButton:choose(type, name)
+function GuiButton:choose(element_type, element_name)
     self.options.type = "choose-elem-button"
-    if type == nil then return self end
-    self.options.elem_type = type
-    self.options[type] = name
-    table.insert(self.name, name)
+    if element_type == nil then return self end
+    self.options.elem_type = element_type
+    if element_type == "signal" then
+        self.options["signal"] = {type="virtual", name=element_name}
+    else
+        self.options[element_type] = element_name
+    end
+    table.insert(self.name, element_name)
     return self
 end
 
