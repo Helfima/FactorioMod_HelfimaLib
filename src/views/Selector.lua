@@ -98,7 +98,10 @@ function Selector:update_elements(data)
         for _, element in pairs(data.elements) do
             local element_type = data.element_type
             if element_type == "surface" then
-                GuiElement.add(table, GuiButton(self.classname, "selected-element", "bypass", element_type, element.name):caption(element.name))
+                local button = GuiElement.add(table, GuiButton(self.classname, "selected-element", "bypass", element_type, element.name):caption(element.name))
+            elseif element_type == "quality" then
+                local style = defines.mod.styles.button.select_icon
+                local button = GuiElement.add(table, GuiButton(self.classname, "selected-element", "bypass", element_type, element.name):sprite("quality", element.name):style(style):tooltip(element.localised_name))
             else
                 local button = GuiElement.add(table, GuiButtonSelectSprite(self.classname, "selected-element", "bypass"):choose(element_type, element.name))
                 button.locked = true
@@ -129,7 +132,10 @@ function Selector:on_event(event)
         local element_value = nil
         local selected_element = nil
         if event.element.type == "button" then
-            element_value = event.element.caption 
+            element_value = event.element.caption
+        elseif event.element.type == "sprite-button" then
+            local tags = event.element.tags
+            element_value = tags.name
         else
             element_value = event.element.elem_value 
         end

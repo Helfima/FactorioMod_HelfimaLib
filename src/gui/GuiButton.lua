@@ -12,24 +12,25 @@ end)
 
 -------------------------------------------------------------------------------
 ---Set Sprite
----@param type string
----@param name string
+---@param element_type string
+---@param element_name string
 ---@param hovered string
 ---@return GuiButton
-function GuiButton:sprite(type, name, hovered)
+function GuiButton:sprite(element_type, element_name, hovered)
     self.options.type = "sprite-button"
+    self.options.tags = { type = element_type, name = element_name}
     self.is_caption = false
-    if type == "menu" then
-        self.options.sprite = GuiElement.getSprite(name)
+    if element_type == "menu" then
+        self.options.sprite = GuiElement.getSprite(element_name)
         if hovered then
             self.options.hovered_sprite = GuiElement.getSprite(hovered)
         end
     else
-        self.options.sprite = GuiElement.getSprite(type, name)
+        self.options.sprite = GuiElement.getSprite(element_type, element_name)
         if hovered then
-            self.options.hovered_sprite = GuiElement.getSprite(type, hovered)
+            self.options.hovered_sprite = GuiElement.getSprite(element_type, hovered)
         end
-        table.insert(self.name, name)
+        table.insert(self.name, element_name)
     end
     return self
 end
