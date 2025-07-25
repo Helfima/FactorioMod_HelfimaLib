@@ -227,7 +227,7 @@ default_gui["helfima_lib_button_selected"] = {
 
 local icon_corner_size = 1
 
-default_gui["helmod_button_icon_default"] = {
+default_gui["helfima_lib_button_icon_default"] = {
   type = "button_style",
   parent = "helfima_lib_button_default",
   default_graphical_set = compositionIcon("__core__/graphics/gui.png", {icon_corner_size, icon_corner_size}, {3 - icon_corner_size, 3 - icon_corner_size}),
@@ -261,9 +261,9 @@ local style_list = {
   {suffix="_flat"},
 }
 
-default_gui["helmod_button_icon"] = {
+default_gui["helfima_lib_button_icon"] = {
   type = "button_style",
-  parent = "helmod_button_icon_default",
+  parent = "helfima_lib_button_icon_default",
   width = icon_size + 2*icon_padding,
   height = icon_size + 2*icon_padding,
   top_padding = icon_padding,
@@ -274,7 +274,7 @@ default_gui["helmod_button_icon"] = {
   scalable = false
 }
 
-default_gui["helmod_button_slot"] = {
+default_gui["helfima_lib_button_slot"] = {
   type = "button_style",
   parent = "slot_button",
   width = icon_size + 2*icon_padding,
@@ -288,15 +288,15 @@ default_gui["helmod_button_slot"] = {
 
 for _,style in pairs(style_list) do
   if style.suffix == "_flat" then
-    default_gui["helmod_button_select_icon"..style.suffix] = {
+    default_gui["helfima_lib_button_select_icon"..style.suffix] = {
       type = "button_style",
-      parent = "helmod_button_icon",
+      parent = "helfima_lib_button_icon",
       default_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=0,y=150}, {top=0,right=0,bottom=0,left=0}, true),
     }
   else
-    default_gui["helmod_button_select_icon"..style.suffix] = {
+    default_gui["helfima_lib_button_select_icon"..style.suffix] = {
       type = "button_style",
-      parent = "helmod_button_icon",
+      parent = "helfima_lib_button_icon",
       default_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=111,y=icon_offset_y+style.offset}, {top=0,right=0,bottom=0,left=0}, true),
       hovered_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=148,y=icon_offset_y+style.offset}, {top=0,right=0,bottom=0,left=0}, true),
       clicked_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=184,y=icon_offset_y+style.offset}, {top=0,right=0,bottom=0,left=0}, true),
@@ -305,9 +305,9 @@ for _,style in pairs(style_list) do
   end
 end
 
-default_gui["helmod_button_icon_xxl"] = {
+default_gui["helfima_lib_button_icon_xxl"] = {
   type = "button_style",
-  parent = "helmod_button_icon_default",
+  parent = "helfima_lib_button_icon_default",
   width = icon_xxl_size + 2*icon_xxl_padding,
   height = icon_xxl_size + 2*icon_xxl_padding,
   top_padding = icon_xxl_padding,
@@ -320,15 +320,15 @@ default_gui["helmod_button_icon_xxl"] = {
 
 for _,style in pairs(style_list) do
   if style.suffix == "_flat" then
-    default_gui["helmod_button_select_icon_xxl"..style.suffix] = {
+    default_gui["helfima_lib_button_select_icon_xxl"..style.suffix] = {
       type = "button_style",
-      parent = "helmod_button_icon_xxl",
+      parent = "helfima_lib_button_icon_xxl",
       default_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=0,y=150}, {top=0,right=0,bottom=0,left=0}, true),
     }
   else
-    default_gui["helmod_button_select_icon_xxl"..style.suffix] = {
+    default_gui["helfima_lib_button_select_icon_xxl"..style.suffix] = {
       type = "button_style",
-      parent = "helmod_button_icon_xxl",
+      parent = "helfima_lib_button_icon_xxl",
       default_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=111,y=icon_offset_y+style.offset}, {top=0,right=0,bottom=0,left=0}, true),
       hovered_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=148,y=icon_offset_y+style.offset}, {top=0,right=0,bottom=0,left=0}, true),
       clicked_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=184,y=icon_offset_y+style.offset}, {top=0,right=0,bottom=0,left=0}, true),
@@ -337,9 +337,9 @@ for _,style in pairs(style_list) do
   end
 end
 
-default_gui["helmod_button_icon_m"] = {
+default_gui["helfima_lib_button_icon_m"] = {
   type = "button_style",
-  parent = "helmod_button_icon_default",
+  parent = "helfima_lib_button_icon_default",
   width = icon_m_size + 2*icon_m_padding,
   height = icon_m_size + 2*icon_m_padding,
   top_padding = icon_m_padding,
@@ -350,7 +350,7 @@ default_gui["helmod_button_icon_m"] = {
   scalable = false
 }
 
-default_gui["helmod_button_slot_m"] = {
+default_gui["helfima_lib_button_slot_m"] = {
   type = "button_style",
   parent = "slot_button",
   width = icon_m_size + 2*icon_m_padding,
@@ -364,15 +364,15 @@ default_gui["helmod_button_slot_m"] = {
 
 for _,style in pairs(style_list) do
   if style.suffix == "_flat" then
-    default_gui["helmod_button_select_icon_m"..style.suffix] = {
+    default_gui["helfima_lib_button_select_icon_m"..style.suffix] = {
       type = "button_style",
-      parent = "helmod_button_icon_m",
+      parent = "helfima_lib_button_icon_m",
       default_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=0,y=150}, {top=0,right=0,bottom=0,left=0}, true),
     }
   else
-    default_gui["helmod_button_select_icon_m"..style.suffix] = {
+    default_gui["helfima_lib_button_select_icon_m"..style.suffix] = {
       type = "button_style",
-      parent = "helmod_button_icon_m",
+      parent = "helfima_lib_button_icon_m",
       default_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=111,y=icon_offset_y+style.offset}, {top=0,right=0,bottom=0,left=0}, true),
       hovered_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=148,y=icon_offset_y+style.offset}, {top=0,right=0,bottom=0,left=0}, true),
       clicked_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=184,y=icon_offset_y+style.offset}, {top=0,right=0,bottom=0,left=0}, true),
@@ -381,9 +381,9 @@ for _,style in pairs(style_list) do
   end
 end
 
-default_gui["helmod_button_icon_sm"] = {
+default_gui["helfima_lib_button_icon_sm"] = {
   type = "button_style",
-  parent = "helmod_button_icon_default",
+  parent = "helfima_lib_button_icon_default",
   width = icon_sm_size + 2*icon_sm_padding,
   height = icon_sm_size + 2*icon_sm_padding,
   top_padding = icon_sm_padding,
@@ -394,7 +394,7 @@ default_gui["helmod_button_icon_sm"] = {
   scalable = false
 }
 
-default_gui["helmod_button_slot_sm"] = {
+default_gui["helfima_lib_button_slot_sm"] = {
   type = "button_style",
   parent = "slot_button",
   width = icon_sm_size + 2*icon_sm_padding,
@@ -408,15 +408,15 @@ default_gui["helmod_button_slot_sm"] = {
 
 for _,style in pairs(style_list) do
   if style.suffix == "_flat" then
-    default_gui["helmod_button_select_icon_sm"..style.suffix] = {
+    default_gui["helfima_lib_button_select_icon_sm"..style.suffix] = {
       type = "button_style",
-      parent = "helmod_button_icon_sm",
+      parent = "helfima_lib_button_icon_sm",
       default_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=0,y=150}, {top=0,right=0,bottom=0,left=0}, true),
     }
   else
-    default_gui["helmod_button_select_icon_sm"..style.suffix] = {
+    default_gui["helfima_lib_button_select_icon_sm"..style.suffix] = {
       type = "button_style",
-      parent = "helmod_button_icon_sm",
+      parent = "helfima_lib_button_icon_sm",
       default_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=111,y=icon_offset_y+style.offset}, {top=0,right=0,bottom=0,left=0}, true),
       hovered_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=148,y=icon_offset_y+style.offset}, {top=0,right=0,bottom=0,left=0}, true),
       clicked_graphical_set = monolithIcon("__core__/graphics/gui.png", monolith_size, monolith_scale, {0,0}, {x=184,y=icon_offset_y+style.offset}, {top=0,right=0,bottom=0,left=0}, true),
@@ -434,7 +434,7 @@ local blank_image= {
   scale = 8,
 }
 
-default_gui["helmod_sort_checkbox_inactive"] = {
+default_gui["helfima_lib_sort_checkbox_inactive"] = {
   type = "checkbox_style",
   font = "default",
   padding = 0,
@@ -451,9 +451,9 @@ default_gui["helmod_sort_checkbox_inactive"] = {
   disabled_checkmark = blank_image
 }
 
-default_gui["helmod_sort_checkbox"] = {
+default_gui["helfima_lib_sort_checkbox"] = {
   type = "checkbox_style",
-  parent = "helmod_sort_checkbox_inactive",
+  parent = "helfima_lib_sort_checkbox_inactive",
   default_graphical_set = {
     filename = "__core__/graphics/arrows/table-header-sort-arrow-down-white.png",
     size = { 16, 16 },
@@ -496,15 +496,15 @@ default_gui["helmod_sort_checkbox"] = {
   }
 }
 
-default_gui["helmod_sort_checkbox_bold_inactive"] = {
+default_gui["helfima_lib_sort_checkbox_bold_inactive"] = {
   type = "checkbox_style",
-  parent = "helmod_sort_checkbox_inactive",
+  parent = "helfima_lib_sort_checkbox_inactive",
   font = "default-bold"
 }
 
-default_gui["helmod_sort_checkbox_bold"] = {
+default_gui["helfima_lib_sort_checkbox_bold"] = {
   type = "checkbox_style",
-  parent = "helmod_sort_checkbox",
+  parent = "helfima_lib_sort_checkbox",
   font = "default-bold"
 }
 
